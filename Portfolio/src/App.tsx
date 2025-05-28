@@ -125,12 +125,11 @@ function Projects({
   const t = translations[lang];
   const [index, setIndex] = useState(0);
   const [projectsPerPage, setProjectsPerPage] = useState(2);
-  const maxIndex = Math.max(0, projects.length - projectsPerPage);
-
-  // Adiciona um estado para controlar quais projetos estão expandidos
   const [expandedProjects, setExpandedProjects] = useState<{
     [key: string]: boolean;
   }>({});
+
+  const maxIndex = Math.max(0, projects.length - projectsPerPage);
 
   // Função para alternar o estado expandido de um projeto
   const toggleExpanded = (projectTitle: string) => {
@@ -211,7 +210,10 @@ function Projects({
                 <h3>{project.title}</h3>
 
                 {/* Versão desktop da descrição (oculta em mobile) */}
-                <p className="project-description desktop-only">
+                <p
+                  className="project-description desktop-only"
+                  aria-hidden="false"
+                >
                   {project.description}
                 </p>
 
@@ -221,12 +223,15 @@ function Projects({
                     className={`project-description mobile-only ${
                       expandedProjects[project.title] ? "expanded" : ""
                     }`}
+                    aria-hidden="true"
                   >
                     {project.description}
                   </p>
 
                   <button
-                    className="toggle-description-btn mobile-only"
+                    className={`toggle-description-btn mobile-only ${
+                      expandedProjects[project.title] ? "expanded" : ""
+                    }`}
                     onClick={() => toggleExpanded(project.title)}
                     aria-expanded={expandedProjects[project.title]}
                   >
