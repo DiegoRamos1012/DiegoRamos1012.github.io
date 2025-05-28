@@ -131,6 +131,20 @@
   color: var(--primary);
 }
 
+/* Gradiente específico para o tema claro */
+.theme-light .portfolio-header::after {
+  background: linear-gradient(
+    90deg,
+    var(--primary) 0%,
+    var(--primary-dark) 50%,
+    var(--primary) 100%
+  );
+  opacity: 0.35; /* Maior opacidade para melhor visibilidade */
+  height: 3px; /* Linha ligeiramente mais espessa */
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(58, 74, 99, 0.1); /* Sombra sutil */
+}
+
 /* =========================
    TEMA ESCURO
    ========================= */
@@ -331,7 +345,7 @@ a:hover {
     var(--primary) 0%,
     var(--primary-light) 100%
   );
-  opacity: 0.18;
+  opacity: 0.18; /* Mantido para o tema escuro */
 }
 .portfolio-header h1 {
   margin: 0.5rem 0 0.2rem 0;
