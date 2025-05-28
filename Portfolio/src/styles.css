@@ -243,6 +243,29 @@
   color: #fff;
 }
 
+.language-toggle {
+  position: absolute;
+  top: 1.5rem;
+  right: 8rem; /* Posicionado à direita do tema */
+  background: transparent;
+  border: 1.5px solid var(--primary);
+  color: var(--primary);
+  border-radius: 999px;
+  padding: 0.4em 1.1em;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition),
+    border var(--transition);
+  z-index: 10;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  letter-spacing: 0.02em;
+}
+.language-toggle:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
 /* =========================
    ESTRUTURA GERAL
    ========================= */
@@ -251,6 +274,18 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background: var(--background-color, #242424);
+  overflow-x: hidden; /* Previne rolagem horizontal */
+  width: 100%; /* Garante que não ultrapasse o viewport */
+  box-sizing: border-box; /* Inclui padding/border na largura total */
+}
+
+* {
+  box-sizing: border-box; /* Aplica para todos os elementos */
+}
+
+html {
+  overflow-x: hidden; /* Previne rolagem horizontal em nível de documento */
+  width: 100%;
 }
 
 a {
@@ -264,12 +299,15 @@ a:hover {
 
 .portfolio-container {
   max-width: 800px;
+  width: 100%; /* Usa 100% da largura disponível */
   margin: 2rem auto;
   padding: 2rem;
   background: #1a1a1a;
   border-radius: 16px;
   box-shadow: 0 2px 16px #0003;
   text-align: center;
+  overflow: hidden; /* Previne overflow de conteúdo */
+  box-sizing: border-box; /* Garante que padding não cause overflow */
 }
 
 /* =========================
@@ -444,6 +482,7 @@ a:hover {
   flex-direction: column;
   align-items: flex-start;
   flex: 1;
+  width: 100%; /* Garante largura total */
 }
 .project-info h3 {
   margin: 0 0 0.5rem 0;
@@ -456,6 +495,10 @@ a:hover {
   color: var(--muted-dark);
   font-size: 1rem;
   line-height: 1.5;
+  display: block; /* Garante que o parágrafo seja exibido como bloco */
+  width: 100%; /* Largura total */
+  overflow-wrap: break-word; /* Quebra palavras longas */
+  word-wrap: break-word; /* Compatibilidade */
 }
 .project-link {
   display: inline-flex;
@@ -539,6 +582,20 @@ a:hover {
 @media (max-width: 600px) {
   .portfolio-container {
     padding: 1rem;
+    margin: 1rem auto;
+    width: 95%; /* Ligeiramente menor que 100% para evitar tocar nas bordas */
+    max-width: none; /* Remove a restrição máxima para telas pequenas */
+  }
+
+  .portfolio-header h1 {
+    font-size: 1.8rem;
+    margin-top: 3rem; /* Espaço para os botões de toggle */
+  }
+  .portfolio-header p {
+    font-size: 0.9rem;
+  }
+  .portfolio-section h2 {
+    font-size: 1.4rem;
   }
   .projects-list {
     flex-direction: column;
@@ -554,6 +611,49 @@ a:hover {
   }
   .project-image {
     max-width: 100%;
+    height: 140px; /* Menor altura para telas pequenas */
+  }
+  .skills-list li {
+    font-size: 0.85em;
+    padding: 0.4em 0.8em;
+  }
+  .theme-toggle,
+  .language-toggle {
+    font-size: 0.85em;
+    padding: 0.35em 0.9em;
+  }
+  .language-toggle {
+    right: 6.5rem; /* Ajustado para telas menores */
+  }
+
+  .project-info {
+    padding: 1rem 0.8rem; /* Reduz padding lateral */
+  }
+
+  .project-info p {
+    display: block !important; /* Força exibição */
+    height: auto !important; /* Altura automática */
+    overflow: visible !important; /* Garante que o texto seja visível */
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    opacity: 1 !important; /* Garante visibilidade */
+  }
+
+  /* Ajustes para controle de exibição mobile/desktop */
+  .desktop-only {
+    display: none;
+  }
+
+  .mobile-only {
+    display: block;
+  }
+
+  .toggle-description-btn {
+    display: inline-block;
+  }
+
+  .project-description.mobile-only {
+    margin-bottom: 0.2rem;
   }
 }
 
@@ -562,11 +662,20 @@ a:hover {
     top: 1rem;
     right: 1rem;
     left: unset !important;
-    font-size: 0.95em;
-    padding: 0.35em 0.9em;
+    font-size: 0.85em;
+    padding: 0.35em 0.8em;
+  }
+  .language-toggle {
+    top: 1rem;
+    right: 5.5rem;
+    font-size: 0.85em;
+    padding: 0.35em 0.8em;
   }
   .portfolio-container {
-    padding: 1.2rem 0.5rem;
+    padding: 1.2rem 0.8rem;
+    margin: 0.8rem auto;
+    border-radius: 12px;
+    width: 95%;
   }
   .projects-list {
     flex-direction: column;
@@ -584,6 +693,212 @@ a:hover {
   .improved-card {
     min-width: 0;
     max-width: 100%;
-    width: 100%;
+    width: 100%; /* Usa largura total disponível */
+    margin: 0; /* Remove margem lateral */
+  }
+  .project-info h3 {
+    font-size: 1.1rem;
+  }
+  .project-info p {
+    font-size: 0.9rem;
+  }
+
+  /* Ajustes para controle de exibição mobile/desktop */
+  .desktop-only {
+    display: none;
+  }
+
+  .mobile-only {
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .portfolio-container {
+    padding: 1rem 0.6rem;
+    margin: 0.5rem auto;
+    border-radius: 10px;
+    width: 95%;
+  }
+
+  .portfolio-header h1 {
+    font-size: 1.5rem;
+    margin-top: 3.5rem;
+  }
+  .portfolio-header p {
+    font-size: 0.85rem;
+  }
+  .portfolio-section h2 {
+    font-size: 1.2rem;
+    padding-left: 0.8rem;
+  }
+  .skills-list {
+    gap: 0.6rem;
+  }
+  .skills-list li {
+    font-size: 0.75em;
+    padding: 0.35em 0.7em;
+  }
+  .project-image {
+    height: 120px;
+  }
+  .project-info {
+    padding: 0.8rem 0.6rem;
+  }
+
+  .project-info p {
+    font-size: 0.85rem;
+    margin-bottom: 0.8rem;
+    line-height: 1.4;
+    display: block !important;
+  }
+
+  .project-link {
+    font-size: 0.85em;
+    padding: 0.4em 0.9em;
+  }
+  .theme-toggle,
+  .language-toggle {
+    font-size: 0.75em;
+    padding: 0.3em 0.7em;
+  }
+  .language-toggle {
+    right: 5rem;
+  }
+  .carousel-arrow {
+    font-size: 1.8rem;
+  }
+}
+
+/* Media query para tablets e telas médias */
+@media (min-width: 601px) and (max-width: 900px) {
+  .portfolio-container {
+    padding: 1.5rem;
+    max-width: 90%;
+  }
+  .carousel-track {
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .improved-card {
+    width: calc(100% - 2rem);
+    max-width: 450px;
+  }
+}
+
+/* Media query para orientação landscape em dispositivos móveis */
+@media (max-height: 500px) and (orientation: landscape) {
+  .portfolio-container {
+    margin: 0.5rem auto;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .portfolio-header {
+    margin-bottom: 1rem;
+  }
+  .portfolio-header h1 {
+    font-size: 1.6rem;
+    margin-top: 2.5rem;
+  }
+  .portfolio-section {
+    margin: 1rem 0;
+  }
+  .project-image {
+    height: 100px;
+  }
+}
+
+/* =========================
+   PROJETOS - Versão Mobile
+   ========================= */
+.project-description {
+  margin: 0 0 1rem 0;
+  width: 100%;
+}
+
+/* Desktop-only elementos */
+.desktop-only {
+  display: block;
+}
+
+/* Mobile-only elementos - escondidos por padrão em desktop */
+.mobile-only {
+  display: none;
+}
+
+.mobile-description-container {
+  width: 100%;
+}
+
+.toggle-description-btn {
+  background: none;
+  border: none;
+  color: var(--primary-light);
+  font-size: 0.9rem;
+  padding: 0.3rem 0;
+  margin-top: -0.5rem;
+  margin-bottom: 0.8rem;
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.theme-light .toggle-description-btn {
+  color: var(--primary);
+}
+
+.project-description.mobile-only {
+  max-height: 3.8rem; /* Altura para aproximadamente 2-3 linhas de texto */
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2; /* Standard property for compatibility */
+  -webkit-box-orient: vertical;
+}
+
+.project-description.mobile-only.expanded {
+  max-height: 200px; /* Altura suficiente para texto completo */
+  -webkit-line-clamp: initial;
+  line-clamp: initial; /* Standard property for compatibility */
+}
+
+/* =========================
+   RESPONSIVIDADE
+   ========================= */
+@media (max-width: 600px) {
+  /* ...existing code... */
+
+  /* Ajustes para controle de exibição mobile/desktop */
+  .desktop-only {
+    display: none;
+  }
+
+  .mobile-only {
+    display: block;
+  }
+
+  .toggle-description-btn {
+    display: inline-block;
+  }
+
+  .project-description.mobile-only {
+    margin-bottom: 0.2rem;
+  }
+}
+
+@media (max-width: 700px) {
+  /* ...existing code... */
+
+  /* Ajustes para controle de exibição mobile/desktop */
+  .desktop-only {
+    display: none;
+  }
+
+  .mobile-only {
+    display: block;
   }
 }

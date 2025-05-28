@@ -123,14 +123,43 @@ function Projects({
   lang: "pt" | "en";
 }) {
   const t = translations[lang];
-  // Mostra dois projetos por vez
   const [index, setIndex] = useState(0);
-  const projectsPerPage = 2;
+  const [projectsPerPage, setProjectsPerPage] = useState(2);
   const maxIndex = Math.max(0, projects.length - projectsPerPage);
 
-  const showPrev = () => setIndex((i) => (i > 0 ? i - projectsPerPage : i));
-  const showNext = () =>
-    setIndex((i) => (i < maxIndex ? i + projectsPerPage : i));
+  // Adiciona um estado para controlar quais projetos estão expandidos
+  const [expandedProjects, setExpandedProjects] = useState<{
+    [key: string]: boolean;
+  }>({});
+
+  // Função para alternar o estado expandido de um projeto
+  const toggleExpanded = (projectTitle: string) => {
+    setExpandedProjects((prev) => ({
+      ...prev,
+      [projectTitle]: !prev[projectTitle],
+    }));
+  };
+
+  useEffect(() => {
+    // Ajusta número de projetos exibidos com base no tamanho da tela
+    const handleResize = () => {
+      if (window.innerWidth <= 700) {
+        setProjectsPerPage(1);
+      } else {
+        setProjectsPerPage(2);
+      }
+    };
+
+    // Chama a função no carregamento e adiciona evento de resize
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    // Limpa o evento quando componente desmonta
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const showPrev = () => setIndex((i) => (i > 0 ? i - 1 : i));
+  const showNext = () => setIndex((i) => (i < maxIndex ? i + 1 : i));
 
   // Troca as descrições dos projetos conforme idioma
   const visibleProjects = projects
@@ -172,12 +201,45 @@ function Projects({
                     src={project.image}
                     alt={project.title}
                     className="project-image"
+                    loading="lazy"
+                    width="100%"
+                    height="auto"
                   />
                 )}
               </div>
               <div className="project-info">
                 <h3>{project.title}</h3>
-                <p>{project.description}</p>
+
+                {/* Versão desktop da descrição (oculta em mobile) */}
+                <p className="project-description desktop-only">
+                  {project.description}
+                </p>
+
+                {/* Versão mobile da descrição com botão expandir/recolher */}
+                <div className="mobile-description-container">
+                  <p
+                    className={`project-description mobile-only ${
+                      expandedProjects[project.title] ? "expanded" : ""
+                    }`}
+                  >
+                    {project.description}
+                  </p>
+
+                  <button
+                    className="toggle-description-btn mobile-only"
+                    onClick={() => toggleExpanded(project.title)}
+                    aria-expanded={expandedProjects[project.title]}
+                  >
+                    {expandedProjects[project.title]
+                      ? lang === "pt"
+                        ? "Ler menos"
+                        : "Read less"
+                      : lang === "pt"
+                      ? "Ler mais"
+                      : "Read more"}
+                  </button>
+                </div>
+
                 <a
                   href={project.link}
                   target="_blank"
@@ -223,14 +285,14 @@ function Projects({
       </div>
       <div className="carousel-indicator">
         {Array.from({
-          length: Math.ceil(projects.length / projectsPerPage),
+          length: Math.ceil(projects.length / (projectsPerPage || 1)),
         }).map((_, i) => (
           <span
             key={i}
             className={`carousel-dot${
-              i * projectsPerPage === index ? " active" : ""
+              i === Math.floor(index / (projectsPerPage || 1)) ? " active" : ""
             }`}
-            onClick={() => setIndex(i * projectsPerPage)}
+            onClick={() => setIndex(i * (projectsPerPage || 1))}
           />
         ))}
       </div>
