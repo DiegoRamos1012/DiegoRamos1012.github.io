@@ -4,6 +4,7 @@ import fundo_barbearia from "./assets/images/fundo_barbearia.jpg";
 import fundo_oficina from "./assets/images/fundo_oficina.jpg";
 import ThemeToggle from "./components/ThemeToggle";
 import LanguageToggle from "./components/LanguageToggle";
+import ContactForm from "./components/ContactForm";
 
 // 1. Arrays de dados
 const skills = [
@@ -48,6 +49,18 @@ const translations = {
     seeOnGithub: "Ver no GitHub",
     previousProject: "Projeto anterior",
     nextProject: "Próximo projeto",
+    contactTitle: "Contato",
+    nameLabel: "Nome",
+    emailLabel: "Email",
+    subjectLabel: "Assunto",
+    messageLabel: "Mensagem",
+    submitButton: "Enviar Mensagem",
+    successMessage: "Mensagem enviada com sucesso! Retornarei em breve.",
+    errorMessage: "Erro ao enviar mensagem. Por favor, tente novamente.",
+    namePlaceholder: "Seu nome",
+    emailPlaceholder: "Seu email",
+    subjectPlaceholder: "Assunto da mensagem",
+    messagePlaceholder: "Escreva sua mensagem aqui...",
     footer:
       "© {year} Diego Ramos dos Santos - Github: Diego1012 - Email: diego.rms1012@gmail.com",
   },
@@ -64,6 +77,18 @@ const translations = {
     seeOnGithub: "View on GitHub",
     previousProject: "Previous project",
     nextProject: "Next project",
+    contactTitle: "Contact",
+    nameLabel: "Name",
+    emailLabel: "Email",
+    subjectLabel: "Subject",
+    messageLabel: "Message",
+    submitButton: "Send Message",
+    successMessage: "Message sent successfully! I'll get back to you soon.",
+    errorMessage: "Error sending message. Please try again.",
+    namePlaceholder: "Your name",
+    emailPlaceholder: "Your email",
+    subjectPlaceholder: "Message subject",
+    messagePlaceholder: "Write your message here...",
     footer:
       "© {year} Diego Ramos dos Santos - Github: Diego1012 - Email: diego.rms1012@gmail.com",
   },
@@ -335,6 +360,7 @@ function App() {
       <About lang={lang} />
       <Skills skills={skills} lang={lang} />
       <Projects projects={projects} lang={lang} />
+      <ContactForm lang={lang} translations={translations} />
       <Footer lang={lang} />
     </div>
   );
