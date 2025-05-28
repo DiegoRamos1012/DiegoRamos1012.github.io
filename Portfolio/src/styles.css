@@ -1,16 +1,251 @@
+/* =========================
+   VARIÁVEIS GLOBAIS
+   ========================= */
 :root {
+  --primary: #3a4a63;
+  --primary-dark: #1a2233;
+  --primary-light: #e3eaf3;
+  --background-light: #f8fafc;
+  --background-dark: #23262f;
+  --card-bg-light: #ffffff;
+  --card-bg-dark: #2d3140;
+  --text-light: #1a2233;
+  --text-dark: #f7f8fa;
+  --muted-light: #5a6273;
+  --muted-dark: #b3b8c5;
+  --border-light: #bfc8d6;
+  --border-dark: #35394a;
+  --shadow: 0 4px 24px 0 rgba(77, 91, 107, 0.1);
+  --radius: 14px;
+  --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* =========================
+   TEMA CLARO
+   ========================= */
+.theme-light {
+  background: linear-gradient(120deg, #f8fafc 0%, #e3eaf3 100%);
+  color: var(--text-light);
+  /* Imagem de fundo sutil */
+  background-image: url("https://www.transparenttextures.com/patterns/diamond-upholstery.png"),
+    linear-gradient(120deg, #f8fafc 0%, #e3eaf3 100%);
+  background-repeat: repeat, no-repeat;
+  background-size: auto, cover;
+}
+.theme-light .portfolio-container {
+  background: linear-gradient(120deg, #fff 80%, #e3eaf3 100%);
+  color: var(--text-light);
+  box-shadow: 0 4px 32px #bfc8d633;
+  border: 1.5px solid var(--border-light);
+}
+.theme-light .portfolio-header h1 {
+  color: var(--primary-dark);
+}
+.theme-light .portfolio-header p,
+.theme-light .portfolio-footer {
+  color: var(--muted-light);
+}
+.theme-light .portfolio-section h2 {
+  color: var(--primary);
+  border-left: 4px solid var(--primary);
+  background: none;
+  padding-left: 1.1rem;
+}
+.theme-light .skills-list li {
+  background: var(--primary-light);
+  color: var(--primary-dark);
+  border: 1.5px solid var(--primary);
+  box-shadow: 0 2px 8px #bfc8d622;
+}
+.theme-light .skills-list li:hover {
+  background: var(--primary);
+  color: #fff;
+}
+.theme-light .project-card,
+.theme-light .improved-card {
+  background: #fff;
+  border: 1.5px solid var(--border-light);
+  color: var(--text-light);
+  box-shadow: 0 4px 16px #bfc8d633;
+}
+.theme-light .project-card h3,
+.theme-light .improved-card h3 {
+  color: var(--primary-dark);
+}
+.theme-light .project-card p,
+.theme-light .improved-card p {
+  color: var(--muted-light);
+}
+.theme-light .project-card a,
+.theme-light .improved-card .project-link {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 2px 8px #bfc8d622;
+  border: none;
+  padding: 0.45em 1.1em;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background var(--transition), color var(--transition),
+    box-shadow var(--transition);
+}
+.theme-light .project-card a:hover,
+.theme-light .improved-card .project-link:hover {
+  background: var(--primary-dark);
+  color: #fff;
+  box-shadow: 0 6px 24px #bfc8d644;
+}
+.theme-light a {
+  color: var(--primary);
+}
+.theme-light a:hover {
+  color: var(--primary-dark);
+}
+.theme-light .improved-card {
+  background: linear-gradient(
+    135deg,
+    var(--card-bg-light, #fff) 80%,
+    var(--primary-light) 100%
+  );
+  border: 1.5px solid var(--border-light);
+  box-shadow: 0 4px 24px #bfc8d633;
+}
+.theme-light .project-image-wrapper {
+  background: #f3f4f6;
+  border-bottom: 1px solid var(--border-light);
+}
+.theme-light .project-info h3 {
+  color: var(--primary-dark);
+}
+.theme-light .project-info p {
+  color: var(--muted-light);
+}
+.theme-light .theme-toggle {
+  color: var(--primary);
+}
+
+/* =========================
+   TEMA ESCURO
+   ========================= */
+.theme-dark {
+  background: linear-gradient(120deg, #23262f 0%, #2d3140 100%);
+  color: var(--text-dark);
+  /* Imagem de fundo sutil */
+  background-image: url("https://www.transparenttextures.com/patterns/hexellence.png"),
+    linear-gradient(120deg, #23262f 0%, #2d3140 100%);
+  background-repeat: repeat, no-repeat;
+  background-size: auto, cover;
+}
+.theme-dark .portfolio-container {
+  background: linear-gradient(120deg, #23262f 80%, #2d3140 100%);
+  color: var(--text-dark);
+  box-shadow: var(--shadow);
+  border: none;
+}
+.theme-dark .portfolio-header h1 {
+  color: var(--primary-light);
+}
+.theme-dark .portfolio-header p,
+.theme-dark .portfolio-footer {
+  color: var(--muted-dark);
+}
+.theme-dark .portfolio-section h2 {
+  color: var(--primary-light);
+  border-left: 4px solid var(--primary-light);
+  background: none;
+  padding-left: 1.1rem; /* aumentado para afastar do border-left */
+}
+.theme-dark .skills-list li {
+  background: var(--primary-dark);
+  color: #fff;
+  border: 1px solid var(--primary-light);
+}
+.theme-dark .skills-list li:hover {
+  background: var(--primary-light);
+  color: var(--primary-dark);
+}
+.theme-dark .project-card {
+  background: var(--card-bg-dark);
+  border: none;
+  color: var(--text-dark);
+}
+.theme-dark .project-card h3 {
+  color: var(--primary-light);
+}
+.theme-dark .project-card p {
+  color: var(--muted-dark);
+}
+.theme-dark .project-card a {
+  background: none;
+  color: var(--primary-light);
+  /* remove qualquer sombra/fundo herdado */
+  box-shadow: none;
+  border: none;
+  padding: 0;
+  font-weight: 600;
+  transition: color var(--transition), text-decoration var(--transition);
+  text-decoration: underline;
+}
+.theme-dark .project-card a:hover {
+  background: none;
+  color: var(--primary);
+  text-decoration: underline;
+}
+.theme-dark a {
+  color: var(--primary-light);
+}
+.theme-dark a:hover {
+  color: var(--primary);
+}
+.theme-dark .improved-card {
+  border: none;
+}
+.theme-dark .carousel-arrow {
+  color: var(--primary-light);
+}
+.theme-dark .carousel-arrow:disabled {
+  color: var(--muted-dark);
+}
+.theme-dark .theme-toggle {
+  color: var(--primary-light);
+}
+
+/* =========================
+   BOTÕES DE TOGGLE (TEMA & IDIOMA)
+   ========================= */
+.theme-toggle {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  background: transparent;
+  border: 1.5px solid var(--primary);
+  color: var(--primary);
+  border-radius: 999px;
+  padding: 0.4em 1.1em;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition),
+    border var(--transition);
+  z-index: 10;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  letter-spacing: 0.02em;
+}
+.theme-toggle:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* =========================
+   ESTRUTURA GERAL
+   ========================= */
 body {
   margin: 0;
   min-width: 320px;
@@ -37,10 +272,36 @@ a:hover {
   text-align: center;
 }
 
+/* =========================
+   HEADER
+   ========================= */
 .portfolio-header {
   margin-bottom: 2rem;
+  position: relative;
 }
-
+.portfolio-header::after {
+  content: "";
+  display: block;
+  margin: 2rem auto 0 auto;
+  width: 90%;
+  max-width: 600px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--primary) 0%,
+    var(--primary-light) 100%
+  );
+  opacity: 0.18;
+}
+.portfolio-header h1 {
+  margin: 0.5rem 0 0.2rem 0;
+  font-size: 2.5rem;
+}
+.portfolio-header p {
+  color: #888;
+  margin: 0;
+}
 .avatar {
   width: 120px;
   height: 120px;
@@ -49,26 +310,22 @@ a:hover {
   margin-bottom: 1rem;
 }
 
-.portfolio-header h1 {
-  margin: 0.5rem 0 0.2rem 0;
-  font-size: 2.5rem;
-}
-
-.portfolio-header p {
-  color: #888;
-  margin: 0;
-}
-
+/* =========================
+   SEÇÕES
+   ========================= */
 .portfolio-section {
   margin: 2rem 0;
   text-align: left;
 }
-
 .portfolio-section h2 {
   color: #646cff;
   margin-bottom: 0.5rem;
+  padding-left: 1.1rem;
 }
 
+/* =========================
+   HABILIDADES
+   ========================= */
 .skills-list {
   list-style: none;
   padding: 0;
@@ -76,22 +333,23 @@ a:hover {
   gap: 1rem;
   flex-wrap: wrap;
 }
-
 .skills-list li {
   background: #242424;
   padding: 0.5em 1em;
   border-radius: 8px;
   border: 1px solid #646cff;
   color: #fff;
-  font-size: 1em;
+  font-size: 0.92em;
 }
 
+/* =========================
+   PROJETOS
+   ========================= */
 .projects-list {
   display: flex;
   gap: 1.5rem;
   flex-wrap: wrap;
 }
-
 .project-card {
   background: #242424;
   border: 1px solid #646cff;
@@ -100,17 +358,184 @@ a:hover {
   flex: 1 1 200px;
   min-width: 200px;
 }
-
 .project-card h3 {
   margin-top: 0;
 }
 
+/* =========================
+   CARROSSEL DE PROJETOS
+   ========================= */
+.projects-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  position: relative;
+}
+.carousel-arrow {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 2.2rem;
+  cursor: pointer;
+  padding: 0.1rem;
+  transition: color 0.2s, opacity 0.2s;
+  opacity: 0.8;
+  user-select: none;
+}
+.carousel-arrow:disabled {
+  color: var(--muted-dark);
+  opacity: 0.3;
+  cursor: default;
+}
+.carousel-track {
+  display: flex;
+  gap: 1.5rem;
+  width: 100%;
+  justify-content: center;
+  align-items: stretch;
+}
+.improved-carousel {
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+  position: relative;
+}
+.improved-card {
+  transition: box-shadow 0.3s, border 0.3s, transform 0.3s;
+  background: linear-gradient(
+    135deg,
+    var(--card-bg-dark, #23262f) 80%,
+    var(--primary) 100%
+  );
+  border-radius: 16px;
+  overflow: hidden;
+  min-width: 320px;
+  max-width: 400px;
+  margin: 0 0.5rem;
+  box-shadow: 0 6px 32px 0 rgba(77, 91, 107, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border: 1.5px solid var(--primary);
+  position: relative;
+}
+.project-image-wrapper {
+  width: 100%;
+  background: #fff2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 160px;
+  border-bottom: 1px solid var(--border-dark);
+}
+.project-image {
+  width: 100%;
+  max-width: 340px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 0 0 12px 12px;
+  margin: 0;
+  box-shadow: 0 2px 12px #0001;
+}
+.project-info {
+  padding: 1.2rem 1rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+}
+.project-info h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary-light);
+}
+.project-info p {
+  margin: 0 0 1rem 0;
+  color: var(--muted-dark);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.45em 1.1em;
+  font-weight: 600;
+  font-size: 1em;
+  text-decoration: none;
+  box-shadow: 0 2px 8px #4d5b6b22;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+  margin-top: auto;
+  cursor: pointer;
+}
+.project-link:hover {
+  background: var(--primary-dark);
+  color: #fff;
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 6px 24px #4d5b6b33;
+}
+
+/* =========================
+   INDICADORES DO CARROSSEL
+   ========================= */
+.carousel-indicator {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.carousel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border-light);
+  display: inline-block;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.carousel-dot.active {
+  background: var(--primary);
+  transform: scale(1.2);
+}
+.theme-dark .carousel-dot {
+  background: var(--border-dark);
+}
+.theme-dark .carousel-dot.active {
+  background: var(--primary-light);
+}
+
+/* =========================
+   FOOTER
+   ========================= */
 .portfolio-footer {
   margin-top: 2rem;
   color: #888;
   font-size: 0.95em;
 }
 
+/* =========================
+   ANIMAÇÕES
+   ========================= */
+@keyframes fadeInCard {
+  from {
+    opacity: 0;
+    transform: translateY(32px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* =========================
+   RESPONSIVIDADE
+   ========================= */
 @media (max-width: 600px) {
   .portfolio-container {
     padding: 1rem;
@@ -118,20 +543,47 @@ a:hover {
   .projects-list {
     flex-direction: column;
   }
+  .projects-carousel {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .carousel-card {
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+  }
+  .project-image {
+    max-width: 100%;
+  }
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+@media (max-width: 700px) {
+  .theme-toggle {
+    top: 1rem;
+    right: 1rem;
+    left: unset !important;
+    font-size: 0.95em;
+    padding: 0.35em 0.9em;
   }
   .portfolio-container {
-    background: #fff;
-    box-shadow: 0 2px 16px #0001;
+    padding: 1.2rem 0.5rem;
   }
-  .skills-list li,
+  .projects-list {
+    flex-direction: column;
+    gap: 1.2rem;
+  }
   .project-card {
-    background: #f9f9f9;
-    color: #213547;
+    min-width: unset;
+    width: 100%;
+  }
+  .carousel-track {
+    flex-direction: column;
+    gap: 1.2rem;
+    align-items: center;
+  }
+  .improved-card {
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
   }
 }
