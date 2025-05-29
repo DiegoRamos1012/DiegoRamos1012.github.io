@@ -6,7 +6,7 @@ import ThemeToggle from "./components/ThemeToggle";
 import LanguageToggle from "./components/LanguageToggle";
 import ContactForm from "./components/ContactForm";
 // Importe o arquivo do currículo
-import curriculum from "./assets/documents/Currículo Dev - Diego Ramos (1).pdf";
+import curriculum from "./assets/documents/Currículo Dev - Diego Ramos (2).pdf";
 
 // 1. Arrays de dados
 const skills = [
