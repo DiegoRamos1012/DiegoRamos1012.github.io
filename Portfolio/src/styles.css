@@ -18,6 +18,8 @@
   --shadow: 0 4px 24px 0 rgba(77, 91, 107, 0.1);
   --radius: 14px;
   --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --accent-color: #646cff;
+  --accent-color-hover: #535bf2;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -1045,4 +1047,63 @@ a:hover {
   }
 }
 
-/* ...existing code... */
+/* Estilos para o botão de download de currículo */
+.download-cv-container {
+  margin: 20px 0;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.download-cv-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: var(--accent-color);
+  color: white;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.download-cv-button:hover {
+  background-color: var(--accent-color-hover);
+  transform: translateY(-2px);
+}
+
+.download-cv-button:active {
+  transform: translateY(0);
+}
+
+/* Estilo para o cabeçalho com o botão de download */
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.header-text {
+  flex: 1;
+}
+
+/* Ajuste do estilo do botão para o cabeçalho */
+.download-cv-container {
+  margin: 0;
+  justify-content: center;
+}
+
+/* Para telas menores */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .download-cv-container {
+    margin-top: 15px;
+    align-self: flex-start;
+  }
+}

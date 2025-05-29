@@ -5,6 +5,8 @@ import fundo_oficina from "./assets/images/fundo_oficina.jpg";
 import ThemeToggle from "./components/ThemeToggle";
 import LanguageToggle from "./components/LanguageToggle";
 import ContactForm from "./components/ContactForm";
+// Importe o arquivo do currículo
+import curriculum from "./assets/documents/Currículo Dev - Diego Ramos (1).pdf";
 
 // 1. Arrays de dados
 const skills = [
@@ -63,6 +65,7 @@ const translations = {
     messagePlaceholder: "Escreva sua mensagem aqui...",
     footer:
       "© {year} Diego Ramos dos Santos - Github: Diego1012 - Email: diego.rms1012@gmail.com",
+    downloadCV: "Baixar Currículo",
   },
   en: {
     aboutTitle: "About me",
@@ -91,6 +94,7 @@ const translations = {
     messagePlaceholder: "Write your message here...",
     footer:
       "© {year} Diego Ramos dos Santos - Github: Diego1012 - Email: diego.rms1012@gmail.com",
+    downloadCV: "Download CV",
   },
 };
 
@@ -108,6 +112,38 @@ function HeaderIntl({ lang }: { lang: "pt" | "en" }) {
   );
 }
 
+// Componente para o botão de download do currículo
+function DownloadCV({ lang }: { lang: "pt" | "en" }) {
+  const t = translations[lang];
+
+  return (
+    <div className="download-cv-container">
+      <a
+        href={curriculum}
+        download="Diego_Ramos_CV.pdf"
+        className="download-cv-button"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style={{ marginRight: "8px" }}
+        >
+          <path
+            d="M8 12L3 7L4.4 5.55L7 8.15V1H9V8.15L11.6 5.55L13 7L8 12ZM2 14V11H4V13H12V11H14V14H2Z"
+            fill="currentColor"
+          />
+        </svg>
+        {t.downloadCV}
+      </a>
+    </div>
+  );
+}
+
 // Seção "Sobre mim", texto adaptado ao idioma
 function About({ lang }: { lang: "pt" | "en" }) {
   const t = translations[lang];
@@ -115,6 +151,7 @@ function About({ lang }: { lang: "pt" | "en" }) {
     <section className="portfolio-section">
       <h2>{t.aboutTitle}</h2>
       <p>{t.aboutText}</p>
+      <DownloadCV lang={lang} />
     </section>
   );
 }
