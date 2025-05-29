@@ -125,6 +125,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ lang, translations }) => {
   return (
     <section className="portfolio-section contact-section">
       <h2>{t.contactTitle}</h2>
+      <br></br>
 
       <form className="contact-form" onSubmit={handleSubmit}>
         <div className="form-group">
