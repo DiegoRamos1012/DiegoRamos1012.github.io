@@ -87,6 +87,10 @@ const translations = {
     contactInfo: "Informações de Contato",
     contactText:
       "Estou disponível para projetos freelance e oportunidades de trabalho. Entre em contato comigo pelo formulário ou diretamente pelos contatos abaixo.",
+    theme: {
+      dark: "Escuro",
+      light: "Claro",
+    },
   },
   en: {
     nav: {
@@ -126,6 +130,10 @@ const translations = {
     contactInfo: "Contact Information",
     contactText:
       "I'm available for freelance projects and job opportunities. Contact me through the form or directly via email.",
+    theme: {
+      dark: "Dark",
+      light: "Light",
+    },
   },
 };
 
@@ -178,7 +186,12 @@ function Navbar({
       </div>
 
       <div className="navbar-actions">
-        <ThemeToggle theme={theme} setTheme={setTheme} />
+        <ThemeToggle
+          theme={theme}
+          setTheme={setTheme}
+          lang={lang}
+          translations={translations}
+        />
         <button
           className="menu-button"
           onClick={toggleMenu}
