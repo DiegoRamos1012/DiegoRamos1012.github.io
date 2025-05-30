@@ -1,51 +1,23 @@
 import { useState, type FormEvent } from "react";
-import {
-  EmailService,
-  type ContactForm as ContactFormData,
-} from "../services/EmailService";
+import { EmailService } from "../services/EmailService";
+import type { LanguageKey, Translations, ContactFormData } from "../types";
 
 interface ContactFormProps {
-  lang: "pt" | "en";
-  translations: {
-    pt: {
-      contactTitle: string;
-      nameLabel: string;
-      emailLabel: string;
-      subjectLabel: string; // Nova label para o assunto
-      messageLabel: string;
-      submitButton: string;
-      successMessage: string;
-      errorMessage: string;
-      namePlaceholder: string;
-      emailPlaceholder: string;
-      subjectPlaceholder: string; // Novo placeholder para o assunto
-      messagePlaceholder: string;
-    };
-    en: {
-      contactTitle: string;
-      nameLabel: string;
-      emailLabel: string;
-      subjectLabel: string; // Nova label para o assunto
-      messageLabel: string;
-      submitButton: string;
-      successMessage: string;
-      errorMessage: string;
-      namePlaceholder: string;
-      emailPlaceholder: string;
-      subjectPlaceholder: string; // Novo placeholder para o assunto
-      messagePlaceholder: string;
-    };
-  };
+  lang: LanguageKey;
+  translations: Translations;
 }
 
+/**
+ * Componente de formulário de contato
+ */
 const ContactForm: React.FC<ContactFormProps> = ({ lang, translations }) => {
   const t = translations[lang];
 
-  // Estado para o formulário - incluindo o novo campo de assunto
+  // Estado para o formulário
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
-    email: "", // Email do usuário que está preenchendo o formulário
-    subject: "", // Novo campo para assunto
+    email: "",
+    subject: "",
     message: "",
   });
 
@@ -56,7 +28,9 @@ const ContactForm: React.FC<ContactFormProps> = ({ lang, translations }) => {
   >("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Gerenciador de alterações nos campos do formulário
+  /**
+   * Gerenciador de alterações nos campos do formulário
+   */
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -67,12 +41,13 @@ const ContactForm: React.FC<ContactFormProps> = ({ lang, translations }) => {
     }));
   };
 
-  // Gerenciador de envio do formulário
-  // Todas as mensagens serão enviadas para seu email profissional configurado no EmailService
+  /**
+   * Gerenciador de envio do formulário
+   */
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    // Validação básica incluindo o novo campo de assunto
+    // Validação básica
     if (
       !formData.name ||
       !formData.email ||
@@ -105,12 +80,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ lang, translations }) => {
 
     try {
       // Enviando email usando o template do EmailJS
-      await EmailService.sendEmail({
-        name: formData.name,
-        email: formData.email,
-        subject: formData.subject, // Enviando o assunto
-        message: formData.message,
-      });
+      await EmailService.sendEmail(formData);
       setSubmitStatus("success");
       setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (error) {
@@ -123,89 +93,96 @@ const ContactForm: React.FC<ContactFormProps> = ({ lang, translations }) => {
   };
 
   return (
-    <section className="portfolio-section contact-section">
-      <h2>{t.contactTitle}</h2>
-      <br></br>
+    <form
+      className="contact-form"
+      onSubmit={handleSubmit}
+      aria-label="Formulário de contato"
+    >
+      <div className="form-group">
+        <label htmlFor="name">{t.nameLabel}</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          placeholder={t.namePlaceholder}
+          disabled={isSubmitting}
+          className="form-control"
+          aria-required="true"
+        />
+      </div>
 
-      <form className="contact-form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="name">{t.nameLabel}</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder={t.namePlaceholder}
-            disabled={isSubmitting}
-            className="form-control"
-          />
+      <div className="form-group">
+        <label htmlFor="email">{t.emailLabel}</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          placeholder={t.emailPlaceholder}
+          disabled={isSubmitting}
+          className="form-control"
+          aria-required="true"
+        />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="subject">{t.subjectLabel}</label>
+        <input
+          type="text"
+          id="subject"
+          name="subject"
+          value={formData.subject}
+          onChange={handleChange}
+          placeholder={t.subjectPlaceholder}
+          disabled={isSubmitting}
+          className="form-control"
+          aria-required="true"
+        />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="message">{t.messageLabel}</label>
+        <textarea
+          id="message"
+          name="message"
+          value={formData.message}
+          onChange={handleChange}
+          placeholder={t.messagePlaceholder}
+          disabled={isSubmitting}
+          className="form-control message-area"
+          rows={5}
+          aria-required="true"
+        />
+      </div>
+
+      {submitStatus === "success" && (
+        <div className="form-feedback success" role="alert">
+          <p>{t.successMessage}</p>
         </div>
+      )}
 
-        <div className="form-group">
-          <label htmlFor="email">{t.emailLabel}</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder={t.emailPlaceholder}
-            disabled={isSubmitting}
-            className="form-control"
-          />
+      {submitStatus === "error" && (
+        <div className="form-feedback error" role="alert">
+          <p>{errorMessage}</p>
         </div>
+      )}
 
-        {/* Novo campo para assunto */}
-        <div className="form-group">
-          <label htmlFor="subject">{t.subjectLabel}</label>
-          <input
-            type="text"
-            id="subject"
-            name="subject"
-            value={formData.subject}
-            onChange={handleChange}
-            placeholder={t.subjectPlaceholder}
-            disabled={isSubmitting}
-            className="form-control"
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="message">{t.messageLabel}</label>
-          <textarea
-            id="message"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            placeholder={t.messagePlaceholder}
-            disabled={isSubmitting}
-            className="form-control message-area"
-            rows={5}
-          />
-        </div>
-
-        {submitStatus === "success" && (
-          <div className="form-feedback success">
-            <p>{t.successMessage}</p>
-          </div>
-        )}
-
-        {submitStatus === "error" && (
-          <div className="form-feedback error">
-            <p>{errorMessage}</p>
-          </div>
-        )}
-
-        <button type="submit" className="submit-button" disabled={isSubmitting}>
-          {isSubmitting
-            ? lang === "pt"
-              ? "Enviando..."
-              : "Sending..."
-            : t.submitButton}
-        </button>
-      </form>
-    </section>
+      <button
+        type="submit"
+        className="submit-button"
+        disabled={isSubmitting}
+        aria-busy={isSubmitting}
+      >
+        {isSubmitting
+          ? lang === "pt"
+            ? "Enviando..."
+            : "Sending..."
+          : t.submitButton}
+      </button>
+    </form>
   );
 };
 

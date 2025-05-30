@@ -5,11 +5,11 @@ import fundo_oficina from "./assets/images/fundo_oficina.jpg";
 import ThemeToggle from "./components/ThemeToggle";
 import LanguageToggle from "./components/LanguageToggle";
 import ContactForm from "./components/ContactForm";
-// Importe o arquivo do currículo
+import type { Theme, LanguageKey, Project, Translations } from "./types";
 import curriculum from "./assets/documents/Currículo Dev - Diego Ramos (2).pdf";
 
-// 1. Arrays de dados
-const skills = [
+// Arrays de dados
+const skills: string[] = [
   "HTML & CSS",
   "Typescript",
   "Node.js",
@@ -19,7 +19,7 @@ const skills = [
   "Git & GitHub",
 ];
 
-const projects = [
+const projects: Project[] = [
   {
     title: "App Mobile para Barbearia",
     image: fundo_barbearia,
@@ -39,6 +39,13 @@ const projects = [
 
 const translations = {
   pt: {
+    nav: {
+      home: "Início",
+      about: "Sobre",
+      skills: "Habilidades",
+      projects: "Projetos",
+      contact: "Contato",
+    },
     aboutTitle: "Sobre mim",
     aboutText:
       "Sou um desenvolvedor apaixonado por tecnologia, com experiência em desenvolvimento web e interfaces modernas. Busco aprimorar meu conhecimento em Back-end e Mobile para criar softwares mais robustos e satisfazer as necessidades do cliente.",
@@ -66,8 +73,18 @@ const translations = {
     footer:
       "© {year} Diego Ramos dos Santos - Github: Diego1012 - Email: diego.rms1012@gmail.com",
     downloadCV: "Baixar Currículo",
+    contactInfo: "Informações de Contato",
+    contactText:
+      "Estou disponível para projetos freelance e oportunidades de trabalho. Entre em contato comigo pelo formulário ou diretamente pelo email.",
   },
   en: {
+    nav: {
+      home: "Home",
+      about: "About",
+      skills: "Skills",
+      projects: "Projects",
+      contact: "Contact",
+    },
     aboutTitle: "About me",
     aboutText:
       "I'm a developer passionate about technology, experienced in web development and modern interfaces. I seek to improve my Backend and Mobile skills to create robust software and meet client needs.",
@@ -95,25 +112,95 @@ const translations = {
     footer:
       "© {year} Diego Ramos dos Santos - Github: Diego1012 - Email: diego.rms1012@gmail.com",
     downloadCV: "Download CV",
+    contactInfo: "Contact Information",
+    contactText:
+      "I'm available for freelance projects and job opportunities. Contact me through the form or directly via email.",
   },
 };
 
-// Cabeçalho do portfólio, exibe nome e título
-function HeaderIntl({ lang }: { lang: "pt" | "en" }) {
+/**
+ * Componente de Navbar
+ */
+function Navbar({
+  theme,
+  setTheme,
+  lang,
+  setLang,
+}: {
+  theme: Theme;
+  setTheme: React.Dispatch<React.SetStateAction<Theme>>;
+  lang: LanguageKey;
+  setLang: React.Dispatch<React.SetStateAction<LanguageKey>>;
+}) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
-    <header className="portfolio-header">
-      <h1>Diego Ramos dos Santos</h1>
-      <p>
-        {lang === "pt"
-          ? "Desenvolvedor Full Stack | React | Golang | Typescript"
-          : "Full Stack Developer | React | Golang | Typescript"}
-      </p>
-    </header>
+    <nav className="navbar">
+      <a href="#" className="navbar-logo">
+        Diego Ramos
+      </a>
+
+      <div className={`navbar-links ${menuOpen ? "active" : ""}`}>
+        <a href="#home" className="navbar-link">
+          {translations[lang].nav.home}
+        </a>
+        <a href="#about" className="navbar-link">
+          {translations[lang].nav.about}
+        </a>
+        <a href="#skills" className="navbar-link">
+          {translations[lang].nav.skills}
+        </a>
+        <a href="#projects" className="navbar-link">
+          {translations[lang].nav.projects}
+        </a>
+        <a href="#contact" className="navbar-link">
+          {translations[lang].nav.contact}
+        </a>
+      </div>
+
+      <div className="navbar-actions">
+        <ThemeToggle theme={theme} setTheme={setTheme} />
+        <LanguageToggle lang={lang} setLang={setLang} />
+        <button
+          className="menu-button"
+          onClick={toggleMenu}
+          aria-expanded={menuOpen}
+          aria-label="Menu de navegação"
+        >
+          {menuOpen ? "✕" : "☰"}
+        </button>
+      </div>
+    </nav>
   );
 }
 
-// Componente para o botão de download do currículo
-function DownloadCV({ lang }: { lang: "pt" | "en" }) {
+/**
+ * Hero section com cabeçalho do portfólio
+ */
+function HeroSection({ lang }: { lang: LanguageKey }) {
+  return (
+    <section id="home" className="hero-section">
+      <div className="portfolio-header">
+        <h1>Diego Ramos dos Santos</h1>
+        <p>
+          {lang === "pt"
+            ? "Desenvolvedor Full Stack | React | Golang | Typescript"
+            : "Full Stack Developer | React | Golang | Typescript"}
+        </p>
+      </div>
+      <DownloadCV lang={lang} />
+    </section>
+  );
+}
+
+/**
+ * Componente para o botão de download do currículo
+ */
+function DownloadCV({ lang }: { lang: LanguageKey }) {
   const t = translations[lang];
 
   return (
@@ -144,23 +231,29 @@ function DownloadCV({ lang }: { lang: "pt" | "en" }) {
   );
 }
 
-// Seção "Sobre mim", texto adaptado ao idioma
-function About({ lang }: { lang: "pt" | "en" }) {
+/**
+ * Seção "Sobre mim", texto adaptado ao idioma
+ */
+function About({ lang }: { lang: LanguageKey }) {
   const t = translations[lang];
   return (
-    <section className="portfolio-section">
+    <section id="about" className="portfolio-section">
       <h2>{t.aboutTitle}</h2>
-      <p>{t.aboutText}</p>
-      <DownloadCV lang={lang} />
+      <div className="about-content">
+        <p>{t.aboutText}</p>
+        <DownloadCV lang={lang} />
+      </div>
     </section>
   );
 }
 
-// Seção de habilidades, lista adaptada ao idioma
-function Skills({ skills, lang }: { skills: string[]; lang: "pt" | "en" }) {
+/**
+ * Seção de habilidades, lista adaptada ao idioma
+ */
+function Skills({ skills, lang }: { skills: string[]; lang: LanguageKey }) {
   const t = translations[lang];
   return (
-    <section className="portfolio-section">
+    <section id="skills" className="skills-section">
       <h2>{t.skillsTitle}</h2>
       <ul className="skills-list">
         {skills.map((skill) => (
@@ -171,170 +264,175 @@ function Skills({ skills, lang }: { skills: string[]; lang: "pt" | "en" }) {
   );
 }
 
-// Seção de projetos, com carrossel e textos adaptados ao idioma
+/**
+ * Seção de projetos, com grid de projetos
+ */
 function Projects({
   projects,
   lang,
 }: {
-  projects: {
-    title: string;
-    image?: string;
-    description: string;
-    link: string;
-  }[];
-  lang: "pt" | "en";
+  projects: Project[];
+  lang: LanguageKey;
 }) {
   const t = translations[lang];
-  const [index, setIndex] = useState(0);
-  const [projectsPerPage, setProjectsPerPage] = useState(2);
-
-  const maxIndex = Math.max(0, projects.length - projectsPerPage);
-
-  useEffect(() => {
-    // Ajusta número de projetos exibidos com base no tamanho da tela
-    const handleResize = () => {
-      if (window.innerWidth <= 700) {
-        setProjectsPerPage(1);
-      } else {
-        setProjectsPerPage(2);
-      }
-    };
-
-    // Chama a função no carregamento e adiciona evento de resize
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    // Limpa o evento quando componente desmonta
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const showPrev = () => setIndex((i) => (i > 0 ? i - 1 : i));
-  const showNext = () => setIndex((i) => (i < maxIndex ? i + 1 : i));
 
   // Troca as descrições dos projetos conforme idioma
-  const visibleProjects = projects
-    .slice(index, index + projectsPerPage)
-    .map((p, idx) => {
-      if (idx === 0 && index === 0) {
-        return { ...p, description: t.project1Desc };
-      }
-      if (idx === 1 || (idx === 0 && index > 0)) {
-        return { ...p, description: t.project2Desc };
-      }
-      return p;
-    });
+  const localizedProjects = projects.map((p, idx) => {
+    if (idx === 0) {
+      return { ...p, description: t.project1Desc };
+    }
+    if (idx === 1) {
+      return { ...p, description: t.project2Desc };
+    }
+    return p;
+  });
 
   return (
-    <section className="portfolio-section">
+    <section id="projects" className="portfolio-section projects-section">
       <h2>{t.projectsTitle}</h2>
-      <div className="projects-carousel improved-carousel">
-        <button
-          className="carousel-arrow left"
-          onClick={showPrev}
-          disabled={index === 0}
-          aria-label={t.previousProject}
-        >
-          &#8592;
-        </button>
-        <div className="carousel-track">
-          {visibleProjects.map((project) => (
-            <div
-              className="improved-card"
-              key={project.title}
-              style={{
-                animation: "fadeInCard 0.5s",
-              }}
-            >
-              <div className="project-image-wrapper">
-                {project.image && (
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="project-image"
-                    loading="lazy"
-                    width="100%"
-                    height="auto"
-                  />
-                )}
-              </div>
-              <div className="project-info">
-                <h3 className="project-title">{project.title}</h3>
-                <p className="project-description">{project.description}</p>
-                <a
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="project-link"
-                >
-                  <span>{t.seeOnGithub}</span>
-                  <svg
-                    width="18"
-                    height="18"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    style={{ marginLeft: 6, verticalAlign: "middle" }}
-                  >
-                    <path
-                      d="M14 3h7v7m0-7L10 14"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M5 5v14h14v-7"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </a>
-              </div>
+      <div className="projects-grid">
+        {localizedProjects.map((project) => (
+          <div
+            className="improved-card"
+            key={project.title}
+            style={{
+              animation: "fadeInCard 0.5s",
+            }}
+          >
+            <div className="project-image-wrapper">
+              {project.image && (
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="project-image"
+                  loading="lazy"
+                  width="100%"
+                  height="auto"
+                />
+              )}
             </div>
-          ))}
-        </div>
-        <button
-          className="carousel-arrow right"
-          onClick={showNext}
-          disabled={index >= maxIndex}
-          aria-label={t.nextProject}
-        >
-          &#8594;
-        </button>
-      </div>
-      <div className="carousel-indicator">
-        {Array.from({
-          length: Math.ceil(projects.length / (projectsPerPage || 1)),
-        }).map((_, i) => (
-          <span
-            key={i}
-            className={`carousel-dot${
-              i === Math.floor(index / (projectsPerPage || 1)) ? " active" : ""
-            }`}
-            onClick={() => setIndex(i * (projectsPerPage || 1))}
-          />
+            <div className="project-info">
+              <h3 className="project-title">{project.title}</h3>
+              <p className="project-description">{project.description}</p>
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="project-link"
+                aria-label={`${t.seeOnGithub}: ${project.title}`}
+              >
+                <span>{t.seeOnGithub}</span>
+                <svg
+                  width="18"
+                  height="18"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  style={{ marginLeft: 6, verticalAlign: "middle" }}
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M14 3h7v7m0-7L10 14"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M5 5v14h14v-7"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
         ))}
       </div>
     </section>
   );
 }
 
-// Rodapé do portfólio, texto adaptado ao idioma
-function Footer({ lang }: { lang: "pt" | "en" }) {
+/**
+ * Seção de contato com formulário e informações
+ */
+function Contact({
+  lang,
+  translations
+}: {
+  lang: LanguageKey;
+  translations: Translations;
+}) {
   const t = translations[lang];
+
+  return (
+    <section id="contact" className="contact-section">
+      <h2>{t.contactTitle}</h2>
+      <div className="contact-container">
+        <div className="contact-info">
+          <h3>{t.contactInfo}</h3>
+          <p>{t.contactText}</p>
+          <p>
+            Email:{" "}
+            <a href="mailto:diego.rms1012@gmail.com">diego.rms1012@gmail.com</a>
+          </p>
+          <p>
+            GitHub:{" "}
+            <a
+              href="https://github.com/DiegoRamos1012"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              DiegoRamos1012
+            </a>
+          </p>
+        </div>
+        <ContactForm lang={lang} translations={translations} />
+      </div>
+    </section>
+  );
+}
+
+/**
+ * Rodapé do portfólio, texto adaptado ao idioma
+ */
+function Footer({ lang }: { lang: LanguageKey }) {
+  const t = translations[lang];
+
   return (
     <footer className="portfolio-footer">
-      <p>{t.footer.replace("{year}", new Date().getFullYear().toString())}</p>
+      <div className="footer-content">
+        <p>{t.footer.replace("{year}", new Date().getFullYear().toString())}</p>
+        <div className="footer-links">
+          <a href="#home" className="footer-link">
+            {translations[lang].nav.home}
+          </a>
+          <a href="#about" className="footer-link">
+            {translations[lang].nav.about}
+          </a>
+          <a href="#skills" className="footer-link">
+            {translations[lang].nav.skills}
+          </a>
+          <a href="#projects" className="footer-link">
+            {translations[lang].nav.projects}
+          </a>
+          <a href="#contact" className="footer-link">
+            {translations[lang].nav.contact}
+          </a>
+        </div>
+      </div>
     </footer>
   );
 }
 
-// Componente principal do app, controla tema e idioma
+/**
+ * Componente principal do app, controla tema e idioma
+ */
 function App() {
   // Dark theme como padrão
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
-  const [lang, setLang] = useState<"pt" | "en">("pt");
+  const [theme, setTheme] = useState<Theme>("dark");
+  const [lang, setLang] = useState<LanguageKey>("pt");
 
   useEffect(() => {
     document.body.classList.remove("theme-light", "theme-dark");
@@ -343,16 +441,17 @@ function App() {
   }, [theme]);
 
   return (
-    <div className="portfolio-container">
-      <ThemeToggle theme={theme} setTheme={setTheme} />
-      <LanguageToggle lang={lang} setLang={setLang} />
-      <HeaderIntl lang={lang} />
-      <About lang={lang} />
-      <Skills skills={skills} lang={lang} />
-      <Projects projects={projects} lang={lang} />
-      <ContactForm lang={lang} translations={translations} />
-      <Footer lang={lang} />
-    </div>
+    <>
+      <Navbar theme={theme} setTheme={setTheme} lang={lang} setLang={setLang} />
+      <div className="portfolio-container">
+        <HeroSection lang={lang} />
+        <About lang={lang} />
+        <Skills skills={skills} lang={lang} />
+        <Projects projects={projects} lang={lang} />
+        <Contact lang={lang} translations={translations} />
+        <Footer lang={lang} />
+      </div>
+    </>
   );
 }
 

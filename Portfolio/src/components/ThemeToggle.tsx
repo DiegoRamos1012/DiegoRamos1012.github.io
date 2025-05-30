@@ -1,19 +1,24 @@
 import React from "react";
+import { type Theme } from "../types";
+interface ThemeToggleProps {
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
+}
 
-// Botão para alternar entre tema claro e escuro
-const ThemeToggle: React.FC<{
-  theme: "light" | "dark";
-  setTheme: (t: "light" | "dark") => void;
-}> = ({ theme, setTheme }) => {
+/**
+ * Componente para alternar entre tema claro e escuro
+ */
+const ThemeToggle: React.FC<ThemeToggleProps> = ({ theme, setTheme }) => {
+  const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
+
   return (
     <button
-      className={`theme-toggle${
-        theme === "dark" ? " active-dark" : " active-light"
+      className="theme-toggle theme-button"
+      onClick={toggleTheme}
+      aria-label={`Alternar para tema ${
+        theme === "light" ? "escuro" : "claro"
       }`}
-      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-      aria-label="Alternar tema"
       type="button"
-      style={{ right: "2rem", left: "auto" }}
     >
       {theme === "light" ? "☀️ Light" : "🌙 Dark"}
     </button>

@@ -20,6 +20,8 @@
   --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --accent-color: #646cff;
   --accent-color-hover: #535bf2;
+  --navbar-height: 70px;
+  --section-padding: 80px 5%;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -27,6 +29,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 }
 
 /* =========================
@@ -40,6 +43,7 @@
     linear-gradient(120deg, #f8fafc 0%, #e3eaf3 100%);
   background-repeat: repeat, no-repeat;
   background-size: auto, cover;
+  background-attachment: fixed;
 }
 .theme-light .portfolio-container {
   background: linear-gradient(120deg, #fff 80%, #e3eaf3 100%);
@@ -234,18 +238,108 @@
 }
 
 /* =========================
+   NAVBAR
+   ========================= */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--navbar-height);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5%;
+  z-index: 1000;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.theme-dark .navbar {
+  background: rgba(35, 38, 47, 0.8);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-logo {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--primary-dark);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.theme-dark .navbar-logo {
+  color: var(--primary-light);
+}
+
+.navbar-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.navbar-link {
+  color: var(--primary-dark);
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  padding: 0.5rem 0;
+}
+
+.theme-dark .navbar-link {
+  color: var(--primary-light);
+}
+
+.navbar-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent-color);
+  transition: width 0.3s;
+}
+
+.navbar-link:hover::after,
+.navbar-link.active::after {
+  width: 100%;
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Botão móvel de menu */
+.menu-button {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--primary-dark);
+  cursor: pointer;
+}
+
+.theme-dark .menu-button {
+  color: var(--primary-light);
+}
+
+/* =========================
    BOTÕES DE TOGGLE (TEMA & IDIOMA)
    ========================= */
 .theme-toggle {
-  position: absolute; /* Alterado de fixed para absolute */
-  top: 1.5rem;
-  right: 2rem;
+  position: relative;
   background: transparent;
   border: 1.5px solid var(--primary);
   color: var(--primary);
   border-radius: 999px;
   padding: 0.4em 1.1em;
-  font-size: 1em;
+  font-size: 0.9em;
   font-weight: 600;
   cursor: pointer;
   transition: background var(--transition), color var(--transition),
@@ -253,48 +347,38 @@
   z-index: 10;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
 }
+
 .theme-toggle:hover {
   background: var(--primary);
   color: #fff;
 }
 
 .language-toggle {
-  position: absolute; /* Alterado de fixed para absolute */
-  top: 1.5rem;
-  right: 8rem; /* Posicionado à direita do tema */
-  background: transparent;
-  border: 1.5px solid var(--primary);
-  color: var(--primary);
-  border-radius: 999px;
-  padding: 0.4em 1.1em;
-  font-size: 1em;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background var(--transition), color var(--transition),
-    border var(--transition);
-  z-index: 10;
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  letter-spacing: 0.02em;
-}
-.language-toggle:hover {
-  background: var(--primary);
-  color: #fff;
+  left: auto;
+  right: 2rem;
 }
 
-/* Ajuste para garantir que o container tenha position: relative */
-.portfolio-container {
-  max-width: 800px;
-  width: 100%; /* Usa 100% da largura disponível */
-  margin: 2rem auto;
-  padding: 2rem;
-  background: #1a1a1a;
-  border-radius: 16px;
-  box-shadow: 0 2px 16px #0003;
-  text-align: center;
-  overflow: hidden; /* Previne overflow de conteúdo */
-  box-sizing: border-box; /* Garante que padding não cause overflow */
-  position: relative; /* Importante para posicionamento absoluto dos botões */
+.theme-button {
+  right: 2rem;
+  left: auto;
+}
+
+.language-button {
+  left: 2rem;
+  right: auto;
+}
+
+.flag-icon {
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.toggle-text {
+  font-weight: 600;
 }
 
 /* =========================
@@ -324,32 +408,40 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
 
+/* Substituição do container centralizado por layout de página completa */
 .portfolio-container {
-  max-width: 800px;
-  width: 100%; /* Usa 100% da largura disponível */
-  margin: 2rem auto;
-  padding: 2rem;
-  background: #1a1a1a;
-  border-radius: 16px;
-  box-shadow: 0 2px 16px #0003;
+  width: 100%;
+  padding-top: var(--navbar-height);
+  margin: 0;
   text-align: center;
-  overflow: hidden; /* Previne overflow de conteúdo */
-  box-sizing: border-box; /* Garante que padding não cause overflow */
-  position: relative; /* Importante para posicionamento absoluto dos botões */
+  position: relative;
 }
 
 /* =========================
-   HEADER
+   HERO SECTION
    ========================= */
+.hero-section {
+  min-height: calc(100vh - var(--navbar-height));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--section-padding);
+  position: relative;
+}
+
 .portfolio-header {
   margin-bottom: 2rem;
   position: relative;
-  padding-top: 2.5rem; /* Aumentado para dar mais espaço acima do título */
+  padding-top: 0;
+  max-width: 900px;
 }
+
 .portfolio-header::after {
   content: "";
   display: block;
@@ -363,1741 +455,295 @@ a:hover {
     var(--primary) 0%,
     var(--primary-light) 100%
   );
-  opacity: 0.18; /* Mantido para o tema escuro */
+  opacity: 0.18;
 }
+
 .portfolio-header h1 {
   margin: 0.5rem 0 0.2rem 0;
-  font-size: 2.5rem;
-  line-height: 1.2; /* Melhor espaçamento entre linhas */
-  padding: 0 1rem; /* Evita que o texto fique muito próximo das bordas */
+  font-size: 3.5rem;
+  line-height: 1.2;
+  padding: 0 1rem;
 }
+
 .portfolio-header p {
   color: #888;
-  margin: 0.5rem 0 0 0; /* Aumentado o espaço entre o título e o subtítulo */
-  padding: 0 1rem; /* Consistente com o padding do h1 */
-}
-.avatar {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  border: 4px solid #646cff;
-  margin-bottom: 1rem;
+  margin: 0.5rem 0 0 0;
+  padding: 0 1rem;
+  font-size: 1.2rem;
 }
 
 /* =========================
    SEÇÕES
    ========================= */
 .portfolio-section {
-  margin: 2rem 0;
+  padding: var(--section-padding);
   text-align: left;
+  max-width: 1400px;
+  margin: 0 auto;
 }
+
 .portfolio-section h2 {
   color: #646cff;
-  margin-bottom: 0.5rem;
+  margin-bottom: 2rem;
   padding-left: 1.1rem;
+  font-size: 2.5rem;
+  position: relative;
 }
 
 /* =========================
-   HABILIDADES
+   ABOUT SECTION
    ========================= */
+.about-section {
+  display: flex;
+  flex-direction: row;
+  gap: 4rem;
+  align-items: center;
+}
+
+.about-content {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.about-content p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  text-align: justify;
+}
+
+/* Remover estilos da imagem que não serão mais usados */
+/* .about-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-image img {
+  max-width: 100%;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+} */
+
+/* =========================
+   SKILLS
+   ========================= */
+.skills-section {
+  background-color: rgba(100, 108, 255, 0.05);
+  padding: var(--section-padding);
+}
+
 .skills-list {
   list-style: none;
   padding: 0;
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   flex-wrap: wrap;
+  justify-content: center;
 }
+
 .skills-list li {
   background: #242424;
-  padding: 0.5em 1em;
+  padding: 0.8em 1.5em;
   border-radius: 8px;
   border: 1px solid #646cff;
   color: #fff;
-  font-size: 0.92em;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.skills-list li:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(100, 108, 255, 0.2);
 }
 
 /* =========================
    PROJETOS
    ========================= */
-.projects-list {
-  display: flex;
-  gap: 1.5rem;
-  flex-wrap: wrap;
+.projects-section {
+  padding: var(--section-padding);
 }
-.project-card {
-  background: #242424;
-  border: 1px solid #646cff;
-  border-radius: 10px;
-  padding: 1rem;
-  flex: 1 1 200px;
-  min-width: 200px;
-  display: flex;
-  flex-direction: column;
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.improved-card {
   height: 100%;
-  overflow: hidden;
-  position: relative;
-}
-.project-card h3 {
-  margin-top: 0;
-}
-.project-image-wrapper {
-  position: relative;
-  overflow: hidden;
-  max-height: 200px;
-}
-.project-image {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-.project-info {
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  z-index: 1; /* Garante que as informações aparecem acima da imagem */
-  background-color: var(--card-bg-color); /* Garante contraste adequado */
-  position: relative; /* Importante para posicionamento */
+  min-height: 400px;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-/* Consolidando as várias definições de project-info em uma única regra */
-.project-info {
-  /* Propriedades base */
-  padding: 1.2rem 1rem 1rem 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  flex: 1;
-  width: 100%;
-  position: relative;
-  z-index: 1; /* Garante que as informações aparecem acima da imagem */
-  background-color: var(--card-bg-dark); /* Cor de fundo padrão (tema escuro) */
-}
-
-/* Tema claro - ajuste de cor de fundo */
-.theme-light .project-info {
-  background-color: var(--card-bg-light);
-}
-
-/* Estilos para elementos dentro de project-info */
-.project-info h3,
-.project-title {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--primary-light);
-}
-
-.project-info p,
-.project-description {
-  margin: 0 0 1rem 0;
-  color: var(--muted-dark);
-  font-size: 1rem;
-  line-height: 1.5;
-  display: block;
-  width: 100%;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-}
-
-/* Ajustes para o tema claro */
-.theme-light .project-info h3,
-.theme-light .project-title {
-  color: var(--primary-dark);
-}
-
-.theme-light .project-info p,
-.theme-light .project-description {
-  color: var(--muted-light);
+.improved-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
 /* =========================
-   CARROSSEL DE PROJETOS
+   CONTATO
    ========================= */
-.projects-carousel {
+.contact-section {
+  background-color: rgba(100, 108, 255, 0.05);
+  padding: var(--section-padding);
+}
+
+.contact-container {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-bottom: 1rem;
-  position: relative;
-}
-.carousel-arrow {
-  background: none;
-  border: none;
-  color: var(--primary);
-  font-size: 2.2rem;
-  cursor: pointer;
-  padding: 0.1rem;
-  transition: color 0.2s, opacity 0.2s;
-  opacity: 0.8;
-  user-select: none;
-}
-.carousel-arrow:disabled {
-  color: var(--muted-dark);
-  opacity: 0.3;
-  cursor: default;
-}
-.carousel-track {
-  display: flex;
-  gap: 1.5rem;
-  width: 100%;
-  justify-content: center;
-  align-items: stretch;
-}
-.improved-carousel {
-  gap: 0.5rem;
-  padding-bottom: 0.5rem;
-  position: relative;
-}
-.improved-card {
-  transition: box-shadow 0.3s, border 0.3s, transform 0.3s;
-  background: linear-gradient(
-    135deg,
-    var(--card-bg-dark, #23262f) 80%,
-    var(--primary) 100%
-  );
-  border-radius: 16px;
-  overflow: hidden;
-  min-width: 320px;
-  max-width: 400px;
-  margin: 0 0.5rem;
-  box-shadow: 0 6px 32px 0 rgba(77, 91, 107, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  border: 1.5px solid var(--primary);
-  position: relative;
-  height: auto;
-  min-height: 400px; /* Reduzido de 450px */
-  max-height: 450px; /* Reduzido de 500px */
-}
-.project-image-wrapper {
-  width: 100%;
-  background: #fff2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 160px; /* Reduzido de 180px */
-  min-height: auto;
-  max-height: 160px; /* Reduzido de 180px */
-  border-bottom: 1px solid var(--border-dark);
-}
-.project-image {
-  width: 100%;
-  max-width: 340px;
-  height: 160px; /* Reduzido de 180px */
-  object-fit: cover;
-  border-radius: 0 0 12px 12px;
-  margin: 0;
-  box-shadow: 0 2px 12px #0001;
-}
-.project-info {
-  padding: 1.2rem 1rem 1rem 1rem;
-  display: flex;
-  flex-direction: column;
+  gap: 4rem;
   align-items: flex-start;
+}
+
+.contact-info {
   flex: 1;
-  width: 100%;
-  position: relative;
-  z-index: 1; /* Garante que as informações aparecem acima da imagem */
-  background-color: var(--card-bg-dark); /* Cor de fundo padrão (tema escuro) */
 }
 
-/* Tema claro - ajuste de cor de fundo */
-.theme-light .project-info {
-  background-color: var(--card-bg-light);
+.contact-info h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
-/* Estilos para elementos dentro de project-info */
-.project-info h3,
-.project-title {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--primary-light);
-}
-
-.project-info p,
-.project-description {
-  margin: 0 0 1rem 0;
-  color: var(--muted-dark);
-  font-size: 1rem;
-  line-height: 1.5;
-  display: block;
-  width: 100%;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-}
-
-/* Ajustes para o tema claro */
-.theme-light .project_info h3,
-.theme-light .project-title {
-  color: var(--primary-dark);
-}
-
-.theme-light .project-info p,
-.theme-light .project-description {
-  color: var(--muted-light);
-}
-
-/* =========================
-   CARROSSEL DE PROJETOS
-   ========================= */
-.projects-carousel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-bottom: 1rem;
-  position: relative;
-}
-.carousel-arrow {
-  background: none;
-  border: none;
-  color: var(--primary);
-  font-size: 2.2rem;
-  cursor: pointer;
-  padding: 0.1rem;
-  transition: color 0.2s, opacity 0.2s;
-  opacity: 0.8;
-  user-select: none;
-}
-.carousel-arrow:disabled {
-  color: var(--muted-dark);
-  opacity: 0.3;
-  cursor: default;
-}
-.carousel-track {
-  display: flex;
-  gap: 1.5rem;
-  width: 100%;
-  justify-content: center;
-  align-items: stretch;
-}
-.improved-carousel {
-  gap: 0.5rem;
-  padding-bottom: 0.5rem;
-  position: relative;
-}
-.improved-card {
-  transition: box-shadow 0.3s, border 0.3s, transform 0.3s;
-  background: linear-gradient(
-    135deg,
-    var(--card-bg-dark, #23262f) 80%,
-    var(--primary) 100%
-  );
-  border-radius: 16px;
-  overflow: hidden;
-  min-width: 320px;
-  max-width: 400px;
-  margin: 0 0.5rem;
-  box-shadow: 0 6px 32px 0 rgba(77, 91, 107, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  border: 1.5px solid var(--primary);
-  position: relative;
-  height: auto;
-  min-height: 400px; /* Reduzido de 450px */
-  max-height: 450px; /* Reduzido de 500px */
-}
-.project-image-wrapper {
-  width: 100%;
-  background: #fff2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 160px; /* Reduzido de 180px */
-  min-height: auto;
-  max-height: 160px; /* Reduzido de 180px */
-  border-bottom: 1px solid var(--border-dark);
-}
-.project-image {
-  width: 100%;
-  max-width: 340px;
-  height: 160px; /* Reduzido de 180px */
-  object-fit: cover;
-  border-radius: 0 0 12px 12px;
-  margin: 0;
-  box-shadow: 0 2px 12px #0001;
-}
-.project-info {
-  padding: 1.2rem 1rem 1rem 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  flex: 1;
-  width: 100%;
-  position: relative;
-  z-index: 1; /* Garante que as informações aparecem acima da imagem */
-  background-color: var(--card-bg-dark); /* Cor de fundo padrão (tema escuro) */
-}
-
-/* Tema claro - ajuste de cor de fundo */
-.theme-light .project-info {
-  background-color: var(--card-bg-light);
-}
-
-/* Estilos para elementos dentro de project-info */
-.project-info h3,
-.project-title {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--primary-light);
-}
-
-.project-info p,
-.project-description {
-  margin: 0 0 1rem 0;
-  color: var(--muted-dark);
-  font-size: 1rem;
-  line-height: 1.5;
-  display: block;
-  width: 100%;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-}
-
-/* Ajustes para o tema claro */
-.theme-light .project_info h3,
-.theme-light .project-title {
-  color: var(--primary-dark);
-}
-
-.theme-light .project-info p,
-.theme-light .project-description {
-  color: var(--muted-light);
-}
-
-/* =========================
-   CARROSSEL DE PROJETOS
-   ========================= */
-.projects-carousel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-bottom: 1rem;
-  position: relative;
-}
-.carousel-arrow {
-  background: none;
-  border: none;
-  color: var(--primary);
-  font-size: 2.2rem;
-  cursor: pointer;
-  padding: 0.1rem;
-  transition: color 0.2s, opacity 0.2s;
-  opacity: 0.8;
-  user-select: none;
-}
-.carousel-arrow:disabled {
-  color: var(--muted-dark);
-  opacity: 0.3;
-  cursor: default;
-}
-.carousel-track {
-  display: flex;
-  gap: 1.5rem;
-  width: 100%;
-  justify-content: center;
-  align-items: stretch;
-}
-.improved-carousel {
-  gap: 0.5rem;
-  padding-bottom: 0.5rem;
-  position: relative;
-}
-.improved-card {
-  transition: box-shadow 0.3s, border 0.3s, transform 0.3s;
-  background: linear-gradient(
-    135deg,
-    var(--card-bg-dark, #23262f) 80%,
-    var(--primary) 100%
-  );
-  border-radius: 16px;
-  overflow: hidden;
-  min-width: 320px;
-  max-width: 400px;
-  margin: 0 0.5rem;
-  box-shadow: 0 6px 32px 0 rgba(77, 91, 107, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  border: 1.5px solid var(--primary);
-  position: relative;
-  height: auto;
-  min-height: 400px; /* Reduzido de 450px */
-  max-height: 450px; /* Reduzido de 500px */
-}
-.project-image-wrapper {
-  width: 100%;
-  background: #fff2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 160px; /* Reduzido de 180px */
-  min-height: auto;
-  max-height: 160px; /* Reduzido de 180px */
-  border-bottom: 1px solid var(--border-dark);
-}
-.project-image {
-  width: 100%;
-  max-width: 340px;
-  height: 160px; /* Reduzido de 180px */
-  object-fit: cover;
-  border-radius: 0 0 12px 12px;
-  margin: 0;
-  box-shadow: 0 2px 12px #0001;
-}
-.project-info {
-  padding: 1.2rem 1rem 1rem 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  flex: 1;
-  width: 100%;
-  position: relative;
-  z-index: 1; /* Garante que as informações aparecem acima da imagem */
-  background-color: var(--card-bg-dark); /* Cor de fundo padrão (tema escuro) */
-}
-
-/* Tema claro - ajuste de cor de fundo */
-.theme-light .project-info {
-  background-color: var(--card-bg-light);
-}
-
-/* Estilos para elementos dentro de project-info */
-.project-info h3,
-.project-title {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--primary-light);
-}
-
-.project-info p,
-.project-description {
-  margin: 0 0 1rem 0;
-  color: var(--muted-dark);
-  font-size: 1rem;
-  line-height: 1.5;
-  display: block;
-  width: 100%;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-}
-
-/* Ajustes para o tema claro */
-.theme-light .project_info h3,
-.theme-light .project-title {
-  color: var(--primary-dark);
-}
-
-.theme-light .project-info p,
-.theme-light .project-description {
-  color: var(--muted-light);
+.contact-form {
+  flex: 2;
 }
 
 /* =========================
    FOOTER
    ========================= */
 .portfolio-footer {
-  margin-top: 2rem;
+  margin-top: 0;
+  padding: 3rem 5%;
   color: #888;
   font-size: 0.95em;
+  background-color: var(--primary-dark);
+  color: var(--text-dark);
+}
+
+.theme-light .portfolio-footer {
+  background-color: var(--primary-light);
+  color: var(--text-light);
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.footer-link {
+  color: var(--text-dark);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.theme-light .footer-link {
+  color: var(--text-light);
+}
+
+.footer-link:hover {
+  color: var(--accent-color);
 }
 
 /* =========================
-   ANIMAÇÕES
+   RESPONSIVE NAVBAR
    ========================= */
-@keyframes fadeInCard {
-  from {
+@media (max-width: 768px) {
+  .navbar-links {
+    position: fixed;
+    top: var(--navbar-height);
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1rem 0;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+    transform: translateY(-100%);
     opacity: 0;
-    transform: translateY(32px) scale(0.97);
+    transition: transform 0.3s, opacity 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    pointer-events: none;
   }
-  to {
+
+  .theme-dark .navbar-links {
+    background: rgba(35, 38, 47, 0.95);
+  }
+
+  .navbar-links.active {
+    transform: translateY(0);
     opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-/* =========================
-   RESPONSIVIDADE
-   ========================= */
-@media (max-width: 600px) {
-  .portfolio-container {
-    padding: 1rem;
-    margin: 1rem auto;
-    width: 95%; /* Ligeiramente menor que 100% para evitar tocar nas bordas */
-    max-width: none; /* Remove a restrição máxima para telas pequenas */
+    pointer-events: auto;
   }
 
-  .portfolio-header {
-    padding-top: 4rem; /* Aumentado ainda mais em telas pequenas */
+  .menu-button {
+    display: block;
   }
 
-  .portfolio-header h1 {
-    font-size: 1.8rem;
-    margin-top: 0; /* Removido margin-top extra pois já temos padding-top */
-    padding: 0 0.5rem;
-    word-wrap: break-word; /* Garantir que palavras longas quebrem corretamente */
-  }
-
-  .portfolio-header p {
-    font-size: 0.9rem;
-    padding: 0 0.5rem;
-  }
-
-  .portfolio-header p {
-    font-size: 0.9rem;
-  }
-  .portfolio-section h2 {
-    font-size: 1.4rem;
-  }
-  .projects-list {
-    flex-direction: column;
-  }
-  .projects-carousel {
-    flex-direction: column;
+  .navbar-actions {
     gap: 0.5rem;
   }
-  .carousel-card {
-    min-width: 0;
-    max-width: 100%;
+}
+
+/* =========================
+   RESPONSIVIDADE
+   ========================= */
+@media (max-width: 900px) {
+  .portfolio-header h1 {
+    font-size: 2.5rem;
+  }
+
+  .about-section {
+    /* flex-direction: column-reverse; */
+    gap: 2rem;
+  }
+
+  .about-content {
     width: 100%;
   }
-  .project-image {
-    max-width: 100%;
-    height: 140px; /* Menor altura para telas pequenas */
-  }
-  .skills-list li {
-    font-size: 0.85em;
-    padding: 0.4em 0.8em;
-  }
-  .theme-toggle,
-  .language-toggle {
-    font-size: 0.85em;
-    padding: 0.35em 0.9em;
-  }
-  .language-toggle {
-    right: 6.5rem; /* Ajustado para telas menores */
-  }
 
-  .project-info {
-    padding: 1rem 0.8rem; /* Reduz padding lateral */
-  }
-
-  .project-info p {
-    display: block !important; /* Força exibição */
-    height: auto !important; /* Altura automática */
-    overflow: visible !important; /* Garante que o texto seja visível */
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-    opacity: 1 !important; /* Garante visibilidade */
-  }
-
-  /* Ajustes para controle de exibição mobile/desktop */
-  .desktop-only {
-    display: none;
-  }
-
-  .mobile-only {
-    display: block;
-  }
-
-  .toggle-description-btn {
-    display: inline-block;
-  }
-
-  .project-description.mobile-only {
-    margin-bottom: 0.2rem;
+  .contact-container {
+    flex-direction: column;
+    gap: 2rem;
   }
 }
 
-@media (max-width: 700px) {
-  .theme-toggle {
-    top: 1rem;
-    right: 1rem;
-    left: unset !important;
-    font-size: 0.85em;
-    padding: 0.35em 0.8em;
-  }
-  .language-toggle {
-    top: 1rem;
-    right: 5.5rem;
-    font-size: 0.85em;
-    padding: 0.35em 0.8em;
-  }
-  .portfolio-container {
-    padding: 1.2rem 0.8rem;
-    margin: 0.8rem auto;
-    border-radius: 12px;
-    width: 95%;
-  }
-  .projects-list {
-    flex-direction: column;
-    gap: 1.2rem;
-  }
-  .project-card {
-    min-width: unset;
-    width: 100%;
-  }
-  .carousel-track {
-    flex-direction: column;
-    gap: 1.2rem;
-    align-items: center;
-  }
-  .improved-card {
-    min-width: 0;
-    max-width: 100%;
-    width: 100%; /* Usa largura total disponível */
-    margin: 0; /* Remove margem lateral */
-  }
-  .project-info h3 {
-    font-size: 1.1rem;
-  }
-  .project-info p {
-    font-size: 0.9rem;
-  }
-
-  /* Ajustes para controle de exibição mobile/desktop */
-  .desktop-only {
-    display: none;
-  }
-
-  .mobile-only {
-    display: block;
-  }
-}
-
-@media (max-width: 480px) {
-  .portfolio-container {
-    padding: 1rem 0.6rem;
-    margin: 0.5rem auto;
-    border-radius: 10px;
-    width: 95%;
-  }
-
-  .portfolio-header {
-    padding-top: 3.8rem;
+@media (max-width: 600px) {
+  :root {
+    --section-padding: 60px 5%;
   }
 
   .portfolio-header h1 {
-    font-size: 1.5rem;
-    margin-top: 0; /* Ajustado */
+    font-size: 2rem;
   }
-  .portfolio-header p {
-    font-size: 0.85rem;
-  }
+
   .portfolio-section h2 {
-    font-size: 1.2rem;
-    padding-left: 0.8rem;
-  }
-  .skills-list {
-    gap: 0.6rem;
-  }
-  .skills-list li {
-    font-size: 0.75em;
-    padding: 0.35em 0.7em;
-  }
-  .project-image {
-    height: 120px;
-    object-fit: cover;
-  }
-  .project-info {
-    padding: 0.9rem 0.7rem;
-  }
-
-  .project-info p {
-    font-size: 0.85rem;
-    margin-bottom: 0.8rem;
-    line-height: 1.4;
-    display: block !important;
-  }
-
-  .project-link {
-    font-size: 0.85em;
-    padding: 0.4em 0.9em;
-  }
-  .theme-toggle,
-  .language-toggle {
-    font-size: 0.75em;
-    padding: 0.3em 0.7em;
-  }
-  .language-toggle {
-    right: 5rem;
-  }
-  .carousel-arrow {
     font-size: 1.8rem;
   }
-}
-
-/* Media query para tablets e telas médias */
-@media (min-width: 601px) and (max-width: 900px) {
-  .portfolio-container {
-    padding: 1.5rem;
-    max-width: 90%;
-  }
-  .carousel-track {
-    gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .improved-card {
-    width: calc(100% - 2rem);
-    max-width: 450px;
-  }
-}
-
-/* Media query para orientação landscape em dispositivos móveis */
-@media (max-height: 500px) and (orientation: landscape) {
-  .portfolio-container {
-    margin: 0.5rem auto;
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-  .portfolio-header {
-    margin-bottom: 1rem;
-  }
-  .portfolio-header h1 {
-    font-size: 1.6rem;
-    margin-top: 0; /* Ajustado */
-  }
-  .portfolio-section {
-    margin: 1rem 0;
-  }
-  .project-image {
-    height: 100px;
-  }
-}
-
-/* =========================
-   PROJETOS - Versão Mobile
-   ========================= */
-.project-description {
-  margin: 0 0 1rem 0;
-  width: 100%;
-}
-
-/* Desktop-only elementos */
-.desktop-only {
-  display: block;
-}
-
-/* Mobile-only elementos - escondidos por padrão em desktop */
-.mobile-only {
-  display: none !important; /* Forçar a não exibição em desktop */
-}
-
-.mobile-description-container {
-  width: 100%;
-  display: none; /* Oculta o container inteiro em desktop */
-}
-
-/* =========================
-   RESPONSIVIDADE
-   ========================= */
-@media (max-width: 700px) {
-  /* ...existing code... */
-
-  /* Ajustes para controle de exibição mobile/desktop */
-  .desktop-only {
-    display: none !important;
-  }
-
-  .mobile-only {
-    display: block !important; /* Sobrescreve a regra do desktop */
-  }
-
-  .mobile-description-container {
-    display: block; /* Exibe o container em mobile */
-  }
-
-  /* ...existing code... */
-}
-
-/* =========================
-   FORMULÁRIO DE CONTATO
-   ========================= */
-.contact-section {
-  margin: 3rem 0;
-}
-
-.contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.form-group label {
-  font-weight: 600;
-  font-size: 1rem;
-  color: var(--primary-light);
-  margin-bottom: 0.3rem;
-}
-
-.theme-light .form-group label {
-  color: var(--primary-dark);
-}
-
-.form-control {
-  padding: 0.9rem 1rem;
-  border-radius: 10px;
-  border: 1.5px solid var(--border-dark);
-  background-color: rgba(255, 255, 255, 0.05);
-  color: var(--text-dark);
-  font-size: 1rem;
-  transition: all 0.2s ease;
-  width: 100%;
-  font-family: inherit;
-}
-
-.theme-light .form-control {
-  border: 1.5px solid var(--border-light);
-  background-color: rgba(255, 255, 255, 0.7);
-  color: var(--text-light);
-}
-
-.form-control:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(58, 74, 99, 0.2);
-}
-
-.message-area {
-  resize: vertical;
-  min-height: 120px;
-}
-
-.submit-button {
-  margin-top: 1rem;
-  padding: 0.9rem 2rem;
-  background: var(--primary);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  align-self: flex-start;
-  letter-spacing: 0.02em;
-}
-
-.submit-button:hover {
-  background: var(--primary-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(58, 74, 99, 0.15);
-}
-
-.submit-button:disabled {
-  background: var(--muted-light);
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-.form-feedback {
-  padding: 1rem;
-  border-radius: 10px;
-  margin-bottom: 1rem;
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-.form-feedback.success {
-  background-color: rgba(39, 174, 96, 0.1);
-  border: 1px solid rgba(39, 174, 96, 0.3);
-  color: #27ae60;
-}
-
-.form-feedback.error {
-  background-color: rgba(231, 76, 60, 0.1);
-  border: 1px solid rgba(231, 76, 60, 0.3);
-  color: #e74c3c;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Responsividade para o formulário de contato */
-@media (max-width: 700px) {
-  .contact-form {
-    padding: 0 0.5rem;
-  }
-
-  .form-control {
-    padding: 0.8rem;
-    font-size: 0.95rem;
-  }
-
-  .submit-button {
-    padding: 0.8rem 1.8rem;
-    font-size: 0.95rem;
-    width: 100%;
-  }
-}
-
-@media (max-width: 480px) {
-  .contact-section h2 {
-    margin-bottom: 1rem;
-  }
-
-  .form-group label {
-    font-size: 0.9rem;
-  }
-
-  .form-control {
-    padding: 0.7rem;
-    font-size: 0.9rem;
-  }
-
-  .submit-button {
-    padding: 0.7rem 1.5rem;
-    font-size: 0.9rem;
-  }
-}
-
-/* Estilos para o botão de download de currículo */
-.download-cv-container {
-  margin: 20px 0;
-  display: flex;
-  justify-content: flex-start;
-}
-
-.download-cv-button {
-  display: inline-flex;
-  align-items: center;
-  padding: 10px 20px;
-  background-color: var(--accent-color);
-  color: white;
-  border-radius: 4px;
-  text-decoration: none;
-  font-weight: 500;
-  transition: background-color 0.3s, transform 0.2s;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.download-cv-button:hover {
-  background-color: var(--accent-color-hover);
-  transform: translateY(-2px);
-}
-
-.download-cv-button:active {
-  transform: translateY(0);
-}
-
-/* Estilo para o cabeçalho com o botão de download */
-.header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.header-text {
-  flex: 1;
-}
-
-/* Ajuste do estilo do botão para o cabeçalho */
-.download-cv-container {
-  margin: 0;
-  justify-content: center;
-}
-
-/* =========================
-   AJUSTES FINAIS
-   ========================= */
-
-/* Ajustes para melhorar a visualização em dispositivos móveis */
-@media (max-width: 768px) {
-  .project-info {
-    padding: 1rem;
-    min-height: 250px; /* Aumentado para acomodar textos maiores */
-  }
-
-  .project-title {
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
-    line-height: 1.3;
-  }
-
-  /* Descrição sempre visível, sem limitação de altura */
-  .project-description, 
-  .project-description.mobile-only {
-    max-height: none;
-    height: auto;
-    overflow: visible;
-    font-size: 1rem;
-    line-height: 1.5;
-    margin-bottom: 1.2rem;
-    display: block !important;
-    transition: none;
-  }
-
-  /* Aumenta espaço do card do projeto inteiro */
-  .project-card.carousel-card {
-    min-height: 500px; /* Altura aumentada para acomodar toda a descrição */
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* Ajusta altura da imagem para dar mais espaço ao texto */
-  .project-image-wrapper {
-    max-height: 150px;
-  }
-  
-  /* Esconde o botão "Ler mais/menos" */
-  .toggle-description-btn {
-    display: none !important;
-  }
-  
-  .mobile-description-container {
-    margin-bottom: 0;
-  }
-  
-  /* Tamanho padrão dos cards para mobile */
-  .improved-card {
-    min-height: 380px;
-    max-height: 380px;
-    height: 380px; /* Altura fixa reduzida */
-    width: 100%;
-    margin: 0 auto 1.5rem auto;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* Tamanho padrão para o wrapper da imagem */
-  .project-image-wrapper {
-    height: 140px; /* Reduzido de 150px */
-    min-height: 140px; /* Reduzido de 150px */
-    max-height: 140px; /* Reduzido de 150px */
-  }
-  
-  /* Altura reduzida para a área de informações */
-  .project-info {
-    height: 200px; /* Reduzido de 230px */
-    min-height: 200px; /* Reduzido de 230px */
-    max-height: 200px; /* Reduzido de 230px */
-    padding: 0.8rem;
-    overflow-y: auto;
-  }
-  
-  /* Ajustes para o título e descrição */
-  .project-title {
-    font-size: 1.3rem;
-    margin-bottom: 0.6rem;
-    line-height: 1.3;
-  }
-  
-  .project-description {
-    font-size: 0.95rem;
-    line-height: 1.4;
-    margin-bottom: 0.8rem;
-  }
-}
-
-/* Ajustes específicos para telas muito pequenas */
-@media (max-width: 480px) {
-  /* ...existing code... */
-  
-  .improved-card {
-    min-height: 320px; /* Reduzido de 350px */
-    max-height: 320px; /* Reduzido de 350px */
-    height: 320px; /* Reduzido de 350px */
-  }
-  
-  .project-image-wrapper {
-    height: 110px; /* Reduzido de 120px */
-    min-height: 110px; /* Reduzido de 120px */
-    max-height: 110px; /* Reduzido de 120px */
-  }
-  
-  .project-info {
-    height: 210px; /* Reduzido de 230px */
-    min-height: 210px; /* Reduzido de 230px */
-    max-height: 210px; /* Reduzido de 230px */
-    padding: 0.7rem;
-  }
-  
-  /* ...existing code... */
-}
-
-/* =========================
-   RESPONSIVIDADE
-   ========================= */
-@media (max-width: 700px) {
-  /* ...existing code... */
-
-  /* Ajustes para controle de exibição mobile/desktop */
-  .desktop-only {
-    display: none !important;
-  }
-
-  .mobile-only {
-    display: block !important; /* Sobrescreve a regra do desktop */
-  }
-
-  .mobile-description-container {
-    display: block; /* Exibe o container em mobile */
-  }
-
-  /* ...existing code... */
-}
-
-/* =========================
-   FORMULÁRIO DE CONTATO
-   ========================= */
-.contact-section {
-  margin: 3rem 0;
-}
-
-.contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.form-group label {
-  font-weight: 600;
-  font-size: 1rem;
-  color: var(--primary-light);
-  margin-bottom: 0.3rem;
-}
-
-.theme-light .form-group label {
-  color: var(--primary-dark);
-}
-
-.form-control {
-  padding: 0.9rem 1rem;
-  border-radius: 10px;
-  border: 1.5px solid var(--border-dark);
-  background-color: rgba(255, 255, 255, 0.05);
-  color: var(--text-dark);
-  font-size: 1rem;
-  transition: all 0.2s ease;
-  width: 100%;
-  font-family: inherit;
-}
-
-.theme-light .form-control {
-  border: 1.5px solid var(--border-light);
-  background-color: rgba(255, 255, 255, 0.7);
-  color: var(--text-light);
-}
-
-.form-control:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(58, 74, 99, 0.2);
-}
-
-.message-area {
-  resize: vertical;
-  min-height: 120px;
-}
-
-.submit-button {
-  margin-top: 1rem;
-  padding: 0.9rem 2rem;
-  background: var(--primary);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  align-self: flex-start;
-  letter-spacing: 0.02em;
-}
-
-.submit-button:hover {
-  background: var(--primary-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(58, 74, 99, 0.15);
-}
-
-.submit-button:disabled {
-  background: var(--muted-light);
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-.form-feedback {
-  padding: 1rem;
-  border-radius: 10px;
-  margin-bottom: 1rem;
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-.form-feedback.success {
-  background-color: rgba(39, 174, 96, 0.1);
-  border: 1px solid rgba(39, 174, 96, 0.3);
-  color: #27ae60;
-}
-
-.form-feedback.error {
-  background-color: rgba(231, 76, 60, 0.1);
-  border: 1px solid rgba(231, 76, 60, 0.3);
-  color: #e74c3c;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Responsividade para o formulário de contato */
-@media (max-width: 700px) {
-  .contact-form {
-    padding: 0 0.5rem;
-  }
-
-  .form-control {
-    padding: 0.8rem;
-    font-size: 0.95rem;
-  }
-
-  .submit-button {
-    padding: 0.8rem 1.8rem;
-    font-size: 0.95rem;
-    width: 100%;
-  }
-}
-
-@media (max-width: 480px) {
-  .contact-section h2 {
-    margin-bottom: 1rem;
-  }
-
-  .form-group label {
-    font-size: 0.9rem;
-  }
-
-  .form-control {
-    padding: 0.7rem;
-    font-size: 0.9rem;
-  }
-
-  .submit-button {
-    padding: 0.7rem 1.5rem;
-    font-size: 0.9rem;
-  }
-}
-
-/* Estilos para o botão de download de currículo */
-.download-cv-container {
-  margin: 20px 0;
-  display: flex;
-  justify-content: flex-start;
-}
-
-.download-cv-button {
-  display: inline-flex;
-  align-items: center;
-  padding: 10px 20px;
-  background-color: var(--accent-color);
-  color: white;
-  border-radius: 4px;
-  text-decoration: none;
-  font-weight: 500;
-  transition: background-color 0.3s, transform 0.2s;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.download-cv-button:hover {
-  background-color: var(--accent-color-hover);
-  transform: translateY(-2px);
-}
-
-.download-cv-button:active {
-  transform: translateY(0);
-}
-
-/* Estilo para o cabeçalho com o botão de download */
-.header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.header-text {
-  flex: 1;
-}
-
-/* Ajuste do estilo do botão para o cabeçalho */
-.download-cv-container {
-  margin: 0;
-  justify-content: center;
-}
-
-/* =========================
-   AJUSTES FINAIS
-   ========================= */
-
-/* Ajustes para melhorar a visualização em dispositivos móveis */
-@media (max-width: 768px) {
-  .project-info {
-    padding: 1rem;
-    min-height: 250px; /* Aumentado para acomodar textos maiores */
-  }
-
-  .project-title {
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
-    line-height: 1.3;
-  }
-
-  /* Descrição sempre visível, sem limitação de altura */
-  .project-description, 
-  .project-description.mobile-only {
-    max-height: none;
-    height: auto;
-    overflow: visible;
-    font-size: 1rem;
-    line-height: 1.5;
-    margin-bottom: 1.2rem;
-    display: block !important;
-    transition: none;
-  }
-
-  /* Aumenta espaço do card do projeto inteiro */
-  .project-card.carousel-card {
-    min-height: 500px; /* Altura aumentada para acomodar toda a descrição */
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* Ajusta altura da imagem para dar mais espaço ao texto */
-  .project-image-wrapper {
-    max-height: 150px;
-  }
-  
-  /* Esconde o botão "Ler mais/menos" */
-  .toggle-description-btn {
-    display: none !important;
-  }
-  
-  .mobile-description-container {
-    margin-bottom: 0;
-  }
-  
-  /* Tamanho padrão dos cards para mobile */
-  .improved-card {
-    min-height: 380px;
-    max-height: 380px;
-    height: 380px; /* Altura fixa reduzida */
-    width: 100%;
-    margin: 0 auto 1.5rem auto;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* Tamanho padrão para o wrapper da imagem */
-  .project-image-wrapper {
-    height: 140px; /* Reduzido de 150px */
-    min-height: 140px; /* Reduzido de 150px */
-    max-height: 140px; /* Reduzido de 150px */
-  }
-  
-  /* Altura reduzida para a área de informações */
-  .project-info {
-    height: 200px; /* Reduzido de 230px */
-    min-height: 200px; /* Reduzido de 230px */
-    max-height: 200px; /* Reduzido de 230px */
-    padding: 0.8rem;
-    overflow-y: auto;
-  }
-  
-  /* Ajustes para o título e descrição */
-  .project-title {
-    font-size: 1.3rem;
-    margin-bottom: 0.6rem;
-    line-height: 1.3;
-  }
-  
-  .project-description {
-    font-size: 0.95rem;
-    line-height: 1.4;
-    margin-bottom: 0.8rem;
-  }
-}
-
-/* Ajustes específicos para telas muito pequenas */
-@media (max-width: 480px) {
-  /* ...existing code... */
-  
-  .improved-card {
-    min-height: 320px; /* Reduzido de 350px */
-    max-height: 320px; /* Reduzido de 350px */
-    height: 320px; /* Reduzido de 350px */
-  }
-  
-  .project-image-wrapper {
-    height: 110px; /* Reduzido de 120px */
-    min-height: 110px; /* Reduzido de 120px */
-    max-height: 110px; /* Reduzido de 120px */
-  }
-  
-  .project-info {
-    height: 210px; /* Reduzido de 230px */
-    min-height: 210px; /* Reduzido de 230px */
-    max-height: 210px; /* Reduzido de 230px */
-    padding: 0.7rem;
-  }
-  
-  /* ...existing code... */
-}
-
-/* =========================
-   RESPONSIVIDADE
-   ========================= */
-@media (max-width: 700px) {
-  /* ...existing code... */
-
-  /* Ajustes para controle de exibição mobile/desktop */
-  .desktop-only {
-    display: none !important;
-  }
-
-  .mobile-only {
-    display: block !important; /* Sobrescreve a regra do desktop */
-  }
-
-  .mobile-description-container {
-    display: block; /* Exibe o container em mobile */
-  }
-
-  /* ...existing code... */
-}
-
-/* =========================
-   FORMULÁRIO DE CONTATO
-   ========================= */
-.contact-section {
-  margin: 3rem 0;
-}
-
-.contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.form-group label {
-  font-weight: 600;
-  font-size: 1rem;
-  color: var(--primary-light);
-  margin-bottom: 0.3rem;
-}
-
-.theme-light .form-group label {
-  color: var(--primary-dark);
-}
-
-.form-control {
-  padding: 0.9rem 1rem;
-  border-radius: 10px;
-  border: 1.5px solid var(--border-dark);
-  background-color: rgba(255, 255, 255, 0.05);
-  color: var(--text-dark);
-  font-size: 1rem;
-  transition: all 0.2s ease;
-  width: 100%;
-  font-family: inherit;
-}
-
-.theme-light .form-control {
-  border: 1.5px solid var(--border-light);
-  background-color: rgba(255, 255, 255, 0.7);
-  color: var(--text-light);
-}
-
-.form-control:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(58, 74, 99, 0.2);
-}
-
-.message-area {
-  resize: vertical;
-  min-height: 120px;
-}
-
-.submit-button {
-  margin-top: 1rem;
-  padding: 0.9rem 2rem;
-  background: var(--primary);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  align-self: flex-start;
-  letter-spacing: 0.02em;
-}
-
-.submit-button:hover {
-  background: var(--primary-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(58, 74, 99, 0.15);
-}
-
-.submit-button:disabled {
-  background: var(--muted-light);
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-.form-feedback {
-  padding: 1rem;
-  border-radius: 10px;
-  margin-bottom: 1rem;
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-.form-feedback.success {
-  background-color: rgba(39, 174, 96, 0.1);
-  border: 1px solid rgba(39, 174, 96, 0.3);
-  color: #27ae60;
-}
-
-.form-feedback.error {
-  background-color: rgba(231, 76, 60, 0.1);
-  border: 1px solid rgba(231, 76, 60, 0.3);
-  color: #e74c3c;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
-/* Responsividade para o formulário de contato */
-@media (max-width: 700px) {
-  .contact-form {
-    padding: 0 0.5rem;
+  .projects-grid {
+    grid-template-columns: 1fr;
   }
 
-  .form-control {
-    padding: 0.8rem;
-    font-size: 0.95rem;
+  .theme-toggle,
+  .language-toggle {
+    padding: 0.3em 0.8em;
+    font-size: 0.8em;
   }
 
-  .submit-button {
-    padding: 0.8rem 1.8rem;
-    font-size: 0.95rem;
-    width: 100%;
+  .hero-section {
+    min-height: calc(100vh - var(--navbar-height));
   }
 }
 
-@media (max-width: 480px) {
-  .contact-section h2 {
-    margin-bottom: 1rem;
-  }
-
-  .form-group label {
-    font-size: 0.9rem;
-  }
-
-  .form-control {
-    padding: 0.7rem;
-    font-size: 0.9rem;
-  }
-
-  .submit-button {
-    padding: 0.7rem 1.5rem;
-    font-size: 0.9rem;
-  }
-}
-
-/* Ajuste para o link do projeto */
-.project-link {
-  margin-top: auto; /* Empurra o link para o final do container */
-  margin-bottom: 0; /* Remove qualquer margem inferior */
-  align-self: flex-start; /* Alinha à esquerda */
-}
-
-/* Ajustes na área de informações do projeto */
-.project-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* Distribui o conteúdo uniformemente */
-}
-
-/* Ajustes na descrição do projeto */
-.project-description {
-  margin-bottom: 1rem; /* Espaço consistente abaixo da descrição */
-  flex-grow: 1; /* Permite que a descrição ocupe o espaço disponível */
-}
-
-/* Ajustes específicos para mobile */
-@media (max-width: 768px) {
-  .project-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* Alinha o conteúdo no topo */
-  }
-  
-  .project-link {
-    margin-top: auto; /* Empurra o link para o final do container */
-    position: relative; /* Ajuda no posicionamento */
-    bottom: 0; /* Mantém o link na parte inferior */
-  }
-}
+/* Mantenha o restante dos estilos originais para elementos que não foram modificados */

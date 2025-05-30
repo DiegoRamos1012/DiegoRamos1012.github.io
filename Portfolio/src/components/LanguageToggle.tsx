@@ -1,42 +1,34 @@
 import React from "react";
 import ReactCountryFlag from "react-country-flag";
+import { type LanguageKey } from "../types";
 
-// Botão para alternar o idioma do site (Português/Inglês)
-const LanguageToggle: React.FC<{
-  lang: "pt" | "en";
-  setLang: (l: "pt" | "en") => void;
-}> = ({ lang, setLang }) => {
+interface LanguageToggleProps {
+  lang: LanguageKey;
+  setLang: (lang: LanguageKey) => void;
+}
+
+/**
+ * Componente para alternar o idioma do site (Português/Inglês)
+ */
+const LanguageToggle: React.FC<LanguageToggleProps> = ({ lang, setLang }) => {
+  const toggleLanguage = () => setLang(lang === "pt" ? "en" : "pt");
+
   return (
     <button
-      className="theme-toggle"
-      style={{
-        left: "2rem",
-        right: "auto",
-        display: "flex",
-        alignItems: "center",
-        gap: "0.5em",
-      }}
-      onClick={() => setLang(lang === "pt" ? "en" : "pt")}
-      aria-label="Switch language"
+      className="theme-toggle language-button"
+      onClick={toggleLanguage}
+      aria-label={`Mudar para ${lang === "pt" ? "inglês" : "português"}`}
       type="button"
     >
       {lang === "pt" ? (
         <>
-          <ReactCountryFlag
-            countryCode="BR"
-            svg
-            style={{ width: "1.5em", height: "1.5em" }}
-          />
-          <span style={{ fontWeight: 600 }}>PT-BR</span>
+          <ReactCountryFlag countryCode="BR" svg className="flag-icon" />
+          <span className="toggle-text">PT-BR</span>
         </>
       ) : (
         <>
-          <ReactCountryFlag
-            countryCode="US"
-            svg
-            style={{ width: "1.5em", height: "1.5em" }}
-          />
-          <span style={{ fontWeight: 600 }}>EN</span>
+          <ReactCountryFlag countryCode="US" svg className="flag-icon" />
+          <span className="toggle-text">EN</span>
         </>
       )}
     </button>
