@@ -187,19 +187,8 @@ function Projects({
   const t = translations[lang];
   const [index, setIndex] = useState(0);
   const [projectsPerPage, setProjectsPerPage] = useState(2);
-  const [expandedProjects, setExpandedProjects] = useState<{
-    [key: string]: boolean;
-  }>({});
 
   const maxIndex = Math.max(0, projects.length - projectsPerPage);
-
-  // Função para alternar o estado expandido de um projeto
-  const toggleExpanded = (projectTitle: string) => {
-    setExpandedProjects((prev) => ({
-      ...prev,
-      [projectTitle]: !prev[projectTitle],
-    }));
-  };
 
   useEffect(() => {
     // Ajusta número de projetos exibidos com base no tamanho da tela
@@ -250,7 +239,7 @@ function Projects({
         <div className="carousel-track">
           {visibleProjects.map((project) => (
             <div
-              className="project-card carousel-card improved-card"
+              className="improved-card"
               key={project.title}
               style={{
                 animation: "fadeInCard 0.5s",
@@ -269,44 +258,8 @@ function Projects({
                 )}
               </div>
               <div className="project-info">
-                <h3>{project.title}</h3>
-
-                {/* Versão desktop da descrição (oculta em mobile) */}
-                <p
-                  className="project-description desktop-only"
-                  aria-hidden="false"
-                >
-                  {project.description}
-                </p>
-
-                {/* Versão mobile da descrição com botão expandir/recolher */}
-                <div className="mobile-description-container">
-                  <p
-                    className={`project-description mobile-only ${
-                      expandedProjects[project.title] ? "expanded" : ""
-                    }`}
-                    aria-hidden="true"
-                  >
-                    {project.description}
-                  </p>
-
-                  <button
-                    className={`toggle-description-btn mobile-only ${
-                      expandedProjects[project.title] ? "expanded" : ""
-                    }`}
-                    onClick={() => toggleExpanded(project.title)}
-                    aria-expanded={expandedProjects[project.title]}
-                  >
-                    {expandedProjects[project.title]
-                      ? lang === "pt"
-                        ? "Ler menos"
-                        : "Read less"
-                      : lang === "pt"
-                      ? "Ler mais"
-                      : "Read more"}
-                  </button>
-                </div>
-
+                <h3 className="project-title">{project.title}</h3>
+                <p className="project-description">{project.description}</p>
                 <a
                   href={project.link}
                   target="_blank"
