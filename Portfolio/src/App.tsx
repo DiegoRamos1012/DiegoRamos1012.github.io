@@ -7,16 +7,27 @@ import LanguageToggle from "./components/LanguageToggle";
 import ContactForm from "./components/ContactForm";
 import type { Theme, LanguageKey, Project, Translations } from "./types";
 import curriculum from "./assets/documents/Currículo Dev - Diego Ramos (2).pdf";
+import {
+  FaHtml5,
+  FaReact,
+  FaNodeJs,
+  FaGithub,
+  FaWhatsapp,
+} from "react-icons/fa";
+import { SiTypescript } from "react-icons/si";
+import { FaGolang } from "react-icons/fa6";
+import { TbBrandReactNative } from "react-icons/tb";
+import { MdEmail } from "react-icons/md";
 
 // Arrays de dados
-const skills: string[] = [
-  "HTML & CSS",
-  "Typescript",
-  "Node.js",
-  "React",
-  "Golang",
-  "React Native",
-  "Git & GitHub",
+const skills = [
+  { name: "HTML & CSS", icon: <FaHtml5 /> },
+  { name: "Typescript", icon: <SiTypescript /> },
+  { name: "Node.js", icon: <FaNodeJs /> },
+  { name: "React", icon: <FaReact /> },
+  { name: "Golang", icon: <FaGolang /> },
+  { name: "React Native", icon: <TbBrandReactNative /> },
+  { name: "Git & GitHub", icon: <FaGithub /> },
 ];
 
 const projects: Project[] = [
@@ -75,7 +86,7 @@ const translations = {
     downloadCV: "Baixar Currículo",
     contactInfo: "Informações de Contato",
     contactText:
-      "Estou disponível para projetos freelance e oportunidades de trabalho. Entre em contato comigo pelo formulário ou diretamente pelo email.",
+      "Estou disponível para projetos freelance e oportunidades de trabalho. Entre em contato comigo pelo formulário ou diretamente pelos contatos abaixo.",
   },
   en: {
     nav: {
@@ -139,10 +150,14 @@ function Navbar({
   };
 
   return (
-    <nav className="navbar">
-      <a href="#" className="navbar-logo">
-        Diego Ramos
-      </a>
+    <nav
+      className={`navbar ${
+        theme === "dark" ? "theme-dark-navbar" : "theme-light-navbar"
+      }`}
+    >
+      <div className="navbar-left">
+        <LanguageToggle lang={lang} setLang={setLang} />
+      </div>
 
       <div className={`navbar-links ${menuOpen ? "active" : ""}`}>
         <a href="#home" className="navbar-link">
@@ -164,7 +179,6 @@ function Navbar({
 
       <div className="navbar-actions">
         <ThemeToggle theme={theme} setTheme={setTheme} />
-        <LanguageToggle lang={lang} setLang={setLang} />
         <button
           className="menu-button"
           onClick={toggleMenu}
@@ -241,7 +255,6 @@ function About({ lang }: { lang: LanguageKey }) {
       <h2>{t.aboutTitle}</h2>
       <div className="about-content">
         <p>{t.aboutText}</p>
-        <DownloadCV lang={lang} />
       </div>
     </section>
   );
@@ -250,14 +263,23 @@ function About({ lang }: { lang: LanguageKey }) {
 /**
  * Seção de habilidades, lista adaptada ao idioma
  */
-function Skills({ skills, lang }: { skills: string[]; lang: LanguageKey }) {
+function Skills({
+  skills,
+  lang,
+}: {
+  skills: Array<{ name: string; icon: React.ReactNode }>;
+  lang: LanguageKey;
+}) {
   const t = translations[lang];
   return (
     <section id="skills" className="skills-section">
       <h2>{t.skillsTitle}</h2>
       <ul className="skills-list">
         {skills.map((skill) => (
-          <li key={skill}>{skill}</li>
+          <li key={skill.name} className="skill-item">
+            <span className="skill-icon">{skill.icon}</span>
+            <span className="skill-name">{skill.name}</span>
+          </li>
         ))}
       </ul>
     </section>
@@ -291,12 +313,13 @@ function Projects({
     <section id="projects" className="portfolio-section projects-section">
       <h2>{t.projectsTitle}</h2>
       <div className="projects-grid">
-        {localizedProjects.map((project) => (
+        {localizedProjects.map((project, index) => (
           <div
             className="improved-card"
             key={project.title}
             style={{
-              animation: "fadeInCard 0.5s",
+              animation: `fadeInUp 0.6s ease-out forwards ${index * 0.2}s`,
+              opacity: 0, // Start with opacity 0 for the animation
             }}
           >
             <div className="project-image-wrapper">
@@ -307,13 +330,21 @@ function Projects({
                   className="project-image"
                   loading="lazy"
                   width="100%"
-                  height="auto"
+                  height={
+                    project.title.includes("Barbearia") ? "160px" : "160px"
+                  } // Reduced height and made consistent
+                  style={{
+                    objectFit: "cover",
+                    objectPosition: "center",
+                  }}
                 />
               )}
             </div>
             <div className="project-info">
-              <h3 className="project-title">{project.title}</h3>
-              <p className="project-description">{project.description}</p>
+              <div>
+                <h3 className="project-title">{project.title}</h3>
+                <p className="project-description">{project.description}</p>
+              </div>
               <a
                 href={project.link}
                 target="_blank"
@@ -359,7 +390,7 @@ function Projects({
  */
 function Contact({
   lang,
-  translations
+  translations,
 }: {
   lang: LanguageKey;
   translations: Translations;
@@ -373,12 +404,13 @@ function Contact({
         <div className="contact-info">
           <h3>{t.contactInfo}</h3>
           <p>{t.contactText}</p>
-          <p>
-            Email:{" "}
-            <a href="mailto:diego.rms1012@gmail.com">diego.rms1012@gmail.com</a>
+          <p className="contact-item">
+            <MdEmail className="contact-icon" />
+            Email: diego.rms1012@gmail.com
           </p>
-          <p>
-            GitHub:{" "}
+          <p className="contact-item">
+            <FaGithub className="contact-icon" />
+            Github:{" "}
             <a
               href="https://github.com/DiegoRamos1012"
               target="_blank"
@@ -386,6 +418,10 @@ function Contact({
             >
               DiegoRamos1012
             </a>
+          </p>
+          <p className="contact-item">
+            <FaWhatsapp className="contact-icon" />
+            Whatsapp: (12) 97405-2268
           </p>
         </div>
         <ContactForm lang={lang} translations={translations} />
@@ -404,23 +440,6 @@ function Footer({ lang }: { lang: LanguageKey }) {
     <footer className="portfolio-footer">
       <div className="footer-content">
         <p>{t.footer.replace("{year}", new Date().getFullYear().toString())}</p>
-        <div className="footer-links">
-          <a href="#home" className="footer-link">
-            {translations[lang].nav.home}
-          </a>
-          <a href="#about" className="footer-link">
-            {translations[lang].nav.about}
-          </a>
-          <a href="#skills" className="footer-link">
-            {translations[lang].nav.skills}
-          </a>
-          <a href="#projects" className="footer-link">
-            {translations[lang].nav.projects}
-          </a>
-          <a href="#contact" className="footer-link">
-            {translations[lang].nav.contact}
-          </a>
-        </div>
       </div>
     </footer>
   );
