@@ -1127,8 +1127,18 @@ a:hover {
   transition: all 0.25s ease;
   position: relative;
   background: var(--accent-color);
-  color: white;
+  color: #433828; /* Darker shade of the button color for harmony */
   z-index: 1;
+}
+
+/* Explicitly set the button text color for light theme */
+body.theme-light .download-cv-button {
+  color: #42321f !important; /* Harmonious dark brown that complements the beige */
+}
+
+body.theme-light .download-cv-button:hover {
+  background: var(--primary-dark);
+  color: var(--primary-light) !important; /* Force text color on hover */
 }
 
 .download-cv-button:hover {
@@ -1145,7 +1155,7 @@ a:hover {
 
 .theme-dark .download-cv-button {
   background: var(--accent-color-dark);
-  color: white;
+  color: white; /* Keep white text for dark theme */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
