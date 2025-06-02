@@ -1165,7 +1165,7 @@ body.theme-light .download-cv-button:hover {
    ========================= */
 .portfolio-footer {
   margin-top: 0;
-  padding: 3rem 5%;
+  padding: 1rem 5%;
   color: #888;
   font-size: 0.95em;
   background-color: var(--primary-dark);
