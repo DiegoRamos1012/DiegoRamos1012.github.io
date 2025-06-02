@@ -62,6 +62,8 @@ const translations = {
       "Sou um desenvolvedor apaixonado por tecnologia, com experiência em desenvolvimento web e interfaces modernas. Busco aprimorar meu conhecimento em Back-end e Mobile para criar softwares mais robustos e satisfazer as necessidades do cliente.",
     skillsTitle: "Habilidades",
     projectsTitle: "Projetos",
+    project1Title: "App Mobile para Barbearia",
+    project2Title: "Gerenciamento de Oficina Mecânica",
     project1Desc:
       "App para dispositivos Android/IOS criado para agilizar o negócio, facilitando o trabalho da equipe e melhorando a experiência do usuário.",
     project2Desc:
@@ -105,6 +107,8 @@ const translations = {
       "I'm a developer passionate about technology, experienced in web development and modern interfaces. I seek to improve my Backend and Mobile skills to create robust software and meet client needs.",
     skillsTitle: "Skills",
     projectsTitle: "Projects",
+    project1Title: "Barbershop Mobile App",
+    project2Title: "Auto Repair Shop Management",
     project1Desc:
       "App for Android/iOS devices created to streamline business, making the team's work easier and improving user experience.",
     project2Desc:
@@ -311,13 +315,21 @@ function Projects({
 }) {
   const t = translations[lang];
 
-  // Troca as descrições dos projetos conforme idioma
+  // Troca as descrições e títulos dos projetos conforme idioma
   const localizedProjects = projects.map((p, idx) => {
     if (idx === 0) {
-      return { ...p, description: t.project1Desc };
+      return { 
+        ...p, 
+        title: t.project1Title,
+        description: t.project1Desc 
+      };
     }
     if (idx === 1) {
-      return { ...p, description: t.project2Desc };
+      return { 
+        ...p, 
+        title: t.project2Title,
+        description: t.project2Desc 
+      };
     }
     return p;
   });
