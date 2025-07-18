@@ -13,22 +13,35 @@ import {
   FaNodeJs,
   FaGithub,
   FaWhatsapp,
+  FaPhp,
+  FaLaravel
 } from "react-icons/fa";
-import { SiTypescript } from "react-icons/si";
+import { SiTypescript, SiVite } from "react-icons/si";
 import { FaGolang } from "react-icons/fa6";
 import { TbBrandReactNative } from "react-icons/tb";
 import { MdEmail } from "react-icons/md";
 
 // Arrays de dados
-const skills = [
-  { name: "HTML & CSS", icon: <FaHtml5 /> },
-  { name: "Typescript", icon: <SiTypescript /> },
-  { name: "Node.js", icon: <FaNodeJs /> },
-  { name: "React", icon: <FaReact /> },
+const programLanguages = [
+  { name: "TypeScript", icon: <SiTypescript /> },
   { name: "Golang", icon: <FaGolang /> },
-  { name: "React Native", icon: <TbBrandReactNative /> },
-  { name: "Git & GitHub", icon: <FaGithub /> },
+  { name: "PHP", icon: <FaPhp /> },
+  { name: "JavaScript (Node.js)", icon: <FaNodeJs /> }
 ];
+
+const frameworksAndLibraries = [
+  { name: "React", icon: <FaReact /> },
+  { name: "React Native", icon: <TbBrandReactNative /> },
+  { name: "Laravel", icon: <FaLaravel /> },
+  { name: "Vite", icon: <SiVite /> }
+];
+
+
+const toolsAndTechnologies = [
+  { name: "HTML & CSS", icon: <FaHtml5 /> },
+  { name: "Git & GitHub", icon: <FaGithub /> }
+];
+
 
 const projects: Project[] = [
   {
@@ -53,14 +66,18 @@ const translations = {
     nav: {
       home: "Início",
       about: "Sobre",
-      skills: "Habilidades",
+      stacks: "Linguagens",
       projects: "Projetos",
       contact: "Contato",
     },
     aboutTitle: "Sobre mim",
     aboutText:
       "Sou um desenvolvedor apaixonado por tecnologia, com experiência em desenvolvimento web e interfaces modernas. Busco aprimorar meu conhecimento em Back-end e Mobile para criar softwares mais robustos e satisfazer as necessidades do cliente.",
-    skillsTitle: "Habilidades",
+    stacksTitle: "Linguagens de Programação",
+    skillsTitle: "Linguagens", 
+    technologiesTitle: "Frameworks e Bibliotecas",
+    toolsTitle: "Ferramentas e Outras Tecnologias", 
+
     projectsTitle: "Projetos",
     project1Title: "App Mobile para Barbearia",
     project2Title: "Gerenciamento de Oficina Mecânica",
@@ -98,14 +115,16 @@ const translations = {
     nav: {
       home: "Home",
       about: "About",
-      skills: "Skills",
+      stacks: "Programming Languages",
       projects: "Projects",
       contact: "Contact",
     },
     aboutTitle: "About me",
-    aboutText:
-      "I'm a developer passionate about technology, experienced in web development and modern interfaces. I seek to improve my Backend and Mobile skills to create robust software and meet client needs.",
-    skillsTitle: "Skills",
+    aboutText: "I'm a passionate developer with experience in web development and modern interfaces. I'm looking to improve my knowledge in Backend and Mobile to create more robust software and meet client needs.",
+    stacksTitle: "Programming Languages",
+    skillsTitle: "Programming Languages",
+    technologiesTitle: "Frameworks and Libraries",
+    toolsTitle: "Tools and Other Technologies",
     projectsTitle: "Projects",
     project1Title: "Barbershop Mobile App",
     project2Title: "Auto Repair Shop Management",
@@ -179,7 +198,7 @@ function Navbar({
           {translations[lang].nav.about}
         </a>
         <a href="#skills" className="navbar-link">
-          {translations[lang].nav.skills}
+          {translations[lang].nav.stacks}
         </a>
         <a href="#projects" className="navbar-link">
           {translations[lang].nav.projects}
@@ -278,24 +297,72 @@ function About({ lang }: { lang: LanguageKey }) {
 }
 
 /**
- * Seção de habilidades, lista adaptada ao idioma
+ * Seção de stacks, lista adaptada ao idioma
  */
-function Skills({
-  skills,
+function Stacks({
+  stacks,
   lang,
 }: {
-  skills: Array<{ name: string; icon: React.ReactNode }>;
+  stacks: Array<{ name: string; icon: React.ReactNode }>;
   lang: LanguageKey;
 }) {
   const t = translations[lang];
   return (
-    <section id="skills" className="skills-section">
-      <h2>{t.skillsTitle}</h2>
-      <ul className="skills-list">
-        {skills.map((skill) => (
-          <li key={skill.name} className="skill-item">
-            <span className="skill-icon">{skill.icon}</span>
-            <span className="skill-name">{skill.name}</span>
+    <section id="stacks" className="stacks-section">
+      <h2>{t.stacksTitle}</h2>
+      <ul className="stacks-list">
+        {stacks.map((stack) => (
+          <li key={stack.name} className="stack-item">
+            <span className="stack-icon">{stack.icon}</span>
+            <span className="stack-name">{stack.name}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+// Nova seção de tecnologias
+function TechnologiesSection({
+  technologies,
+  lang,
+}: {
+  technologies: Array<{ name: string; icon: React.ReactNode }>;
+  lang: LanguageKey;
+}) {
+  const t = translations[lang];
+  return (
+    <section id="technologies" className="stacks-section">
+      <h2>{t.technologiesTitle}</h2>
+      <ul className="stacks-list">
+        {technologies.map((tech) => (
+          <li key={tech.name} className="stack-item">
+            <span className="stack-icon">{tech.icon}</span>
+            <span className="stack-name">{tech.name}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+// Nova seção para toolsAndTechnologies
+function ToolsSection({
+  tools,
+  lang,
+}: {
+  tools: Array<{ name: string; icon: React.ReactNode }>;
+  lang: LanguageKey;
+}) {
+  const t = translations[lang];
+  return (
+    <section id="tools" className="stacks-section">
+      <h2>{t.toolsTitle}</h2>
+      <ul className="stacks-list">
+        {tools.map((tool) => (
+          <li key={tool.name} className="stack-item">
+            <span className="stack-icon">{tool.icon}</span>
+            <span className="stack-name">{tool.name}</span>
           </li>
         ))}
       </ul>
@@ -344,7 +411,7 @@ function Projects({
             key={project.title}
             style={{
               animation: `fadeInUp 0.6s ease-out forwards ${index * 0.2}s`,
-              opacity: 0, // Start with opacity 0 for the animation
+              opacity: 0, 
             }}
           >
             <div className="project-image-wrapper">
@@ -357,7 +424,7 @@ function Projects({
                   width="100%"
                   height={
                     project.title.includes("Barbearia") ? "160px" : "160px"
-                  } // Reduced height and made consistent
+                  } 
                   style={{
                     objectFit: "cover",
                     objectPosition: "center",
@@ -490,7 +557,9 @@ function App() {
       <div className="portfolio-container">
         <HeroSection lang={lang} />
         <About lang={lang} />
-        <Skills skills={skills} lang={lang} />
+        <Stacks stacks={programLanguages} lang={lang} />
+        <TechnologiesSection technologies={frameworksAndLibraries} lang={lang} />
+        <ToolsSection tools={toolsAndTechnologies} lang={lang} />
         <Projects projects={projects} lang={lang} />
         <Contact lang={lang} translations={translations} />
         <Footer lang={lang} />

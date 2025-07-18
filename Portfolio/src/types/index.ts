@@ -7,7 +7,7 @@ export interface Translations {
     nav: {
       home: string;
       about: string;
-      skills: string;
+      stacks: string;
       projects: string;
       contact: string;
     };

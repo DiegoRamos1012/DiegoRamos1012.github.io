@@ -472,12 +472,12 @@ a:hover {
 }
 
 /* Section with alternate background */
-.skills-section,
+.stacks-section,
 .contact-section {
   position: relative;
 }
 
-.theme-light .skills-section::before,
+.theme-light .stacks-section::before,
 .theme-light .contact-section::before {
   content: "";
   position: absolute;
@@ -490,7 +490,7 @@ a:hover {
   transition: opacity 0.6s ease;
 }
 
-.theme-dark .skills-section::before,
+.theme-dark .stacks-section::before,
 .theme-dark .contact-section::before {
   content: "";
   position: absolute;
@@ -504,7 +504,7 @@ a:hover {
 }
 
 /* Section transition gradients */
-.skills-section::after {
+.stacks-section::after {
   content: "";
   position: absolute;
   height: 100px;
@@ -515,7 +515,7 @@ a:hover {
   z-index: -1;
 }
 
-.skills-section::before {
+.stacks-section::before {
   content: "";
   position: absolute;
   height: 100px;
@@ -528,23 +528,6 @@ a:hover {
     transparent
   );
   z-index: -1;
-}
-
-.contact-section::after {
-  content: "";
-  position: absolute;
-  height: 100px;
-  left: 0;
-  right: 0;
-  top: -50px;
-  background: linear-gradient(to top, rgba(100, 108, 255, 0.05), transparent);
-  z-index: -1;
-}
-
-/* Ensuring content is above the background layers */
-.portfolio-section > * {
-  position: relative;
-  z-index: 2;
 }
 
 /* =========================
@@ -578,14 +561,14 @@ a:hover {
 }
 
 /* =========================
-   SKILLS
+   STACKS
    ========================= */
-.skills-section {
+.stacks-section {
   background-color: rgba(100, 108, 255, 0.05);
   padding: var(--section-padding);
 }
 
-.skills-list {
+.stacks-list {
   list-style: none;
   padding: 0;
   display: flex;
@@ -594,7 +577,7 @@ a:hover {
   justify-content: center;
 }
 
-.skills-list li {
+.stacks-list li {
   background: #242424;
   padding: 0.8em 1.5em;
   border-radius: 8px;
@@ -604,9 +587,36 @@ a:hover {
   transition: all 0.3s ease;
 }
 
-.skills-list li:hover {
+.stacks-list li:hover {
   transform: translateY(-5px);
   box-shadow: 0 5px 15px rgba(100, 108, 255, 0.2);
+}
+
+/* =========================
+   TEMA CLARO - STACKS
+   ========================= */
+.theme-light .stacks-list li {
+  background: #f3e8e7;
+  color: #7d7083;
+  border: 1.5px solid #d9bdb9;
+  box-shadow: 0 2px 8px #cabfb222;
+}
+.theme-light .stacks-list li:hover {
+  background: #d3c2a2;
+  color: #5a5761;
+}
+
+/* =========================
+   TEMA ESCURO - STACKS
+   ========================= */
+.theme-dark .stacks-list li {
+  background: var(--primary-dark);
+  color: #fff;
+  border: 1px solid var(--primary-light);
+}
+.theme-dark .stacks-list li:hover {
+  background: var(--primary-light);
+  color: var(--primary-dark);
 }
 
 /* =========================
@@ -1185,31 +1195,24 @@ body.theme-light .download-cv-button:hover {
 }
 
 /* Adicione ao seu arquivo styles.css */
-.skill-item {
+.stack-item {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.skill-icon {
+.stack-icon {
   font-size: 1.5rem;
   color: var(--accent-color);
   display: flex;
   align-items: center;
 }
 
-.contact-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 1.2rem;
-  line-height: 1.6;
-}
-
 .contact-icon {
   font-size: 1.3rem;
   color: var(--accent-color);
   flex-shrink: 0;
+  left: 5px;
 }
 
 .theme-dark .contact-icon {

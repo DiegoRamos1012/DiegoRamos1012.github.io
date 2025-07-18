@@ -1,54 +1,115 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Como Modificar o Portfólio
 
-Currently, two official plugins are available:
+Este guia explica como personalizar e atualizar o portfólio disponível neste repositório.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Estrutura dos Arquivos
 
-## Expanding the ESLint configuration
+- **src/App.tsx**: Arquivo principal do React, onde estão as seções, textos e arrays de dados.
+- **src/styles.css**: Arquivo de estilos globais e das seções.
+- **src/assets/**: Imagens e documentos usados no portfólio.
+- **src/components/**: Componentes reutilizáveis como ThemeToggle, LanguageToggle, ContactForm.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Como alterar as informações principais
+
+### 1. Dados Pessoais
+
+No início do arquivo `src/App.tsx`, altere o nome, título, e textos de apresentação conforme desejar:
+
+```tsx
+// ...existing code...
+<h1>Diego Ramos dos Santos</h1>
+<p>
+  {lang === "pt"
+    ? "Desenvolvedor Full Stack | React | Golang | Typescript"
+    : "Full Stack Developer | React | Golang | Typescript"}
+</p>
+// ...existing code...
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Linguagens, Frameworks e Ferramentas
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Os arrays `programLanguages`, `frameworksAndLibraries` e `toolsAndTechnologies` definem os ícones e nomes exibidos nas seções de stacks:
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```tsx
+const programLanguages = [
+  { name: "TypeScript", icon: <SiTypescript /> },
+  // ...adicione ou remova conforme necessário
+];
 ```
+
+Para adicionar/remover itens, basta editar esses arrays.
+
+### 3. Projetos
+
+Adicione, edite ou remova projetos no array `projects`:
+
+```tsx
+const projects: Project[] = [
+  {
+    title: "Nome do Projeto",
+    image: caminho_da_imagem,
+    description: "Descrição do projeto.",
+    link: "URL do projeto ou repositório",
+  },
+  // ...outros projetos
+];
+```
+
+### 4. Textos e Traduções
+
+Todos os textos (inclusive títulos de seções) estão no objeto `translations` em `src/App.tsx`. Edite os valores em `pt` e `en` para alterar o conteúdo em português e inglês.
+
+```tsx
+const translations = {
+  pt: {
+    aboutTitle: "Sobre mim",
+    // ...outros textos
+  },
+  en: {
+    aboutTitle: "About me",
+    // ...outros textos
+  }
+}
+```
+
+### 5. Currículo
+
+Substitua o arquivo PDF em `src/assets/documents/` e atualize o import em `App.tsx` se necessário.
+
+---
+
+## Como alterar estilos
+
+Edite o arquivo `src/styles.css` para personalizar cores, fontes, espaçamentos e aparência das seções.
+
+---
+
+## Como adicionar novas seções
+
+1. Crie um novo array de dados (se necessário) em `App.tsx`.
+2. Crie uma função/componente para renderizar a nova seção.
+3. Adicione o componente na ordem desejada dentro do componente `App`.
+4. Adicione o título da seção no objeto `translations`.
+
+---
+
+## Como rodar o projeto localmente
+
+1. Instale as dependências:
+   ```
+   npm install (ou npm i)
+   ```
+2. Rode o projeto:
+   ```
+   npm run dev
+   ```
+3. Acesse `http://localhost:5173` (ou porta configurada).
+
+---
+
+## Dúvidas
+
+Abra uma issue ou entre em contato pelo email informado no rodapé do portfólio.
