@@ -56,7 +56,7 @@ const projects: Project[] = [
     image: fundo_oficina,
     description:
       "Um site ágil e intuitivo ao usuário destinado ao uso da equipe do negócio, onde é possível gerenciar estoque, clientes, novos pedidos e mais.",
-    link: "#",
+    link: "https://github.com/DiegoRamos1012/OficinaMecanica",
   },
   // Adicione mais projetos conforme necessário
 ];
