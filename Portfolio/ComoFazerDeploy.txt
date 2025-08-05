@@ -1,3 +1,7 @@
-1 - Inicie o comando "npm run deploy"
+1 - Inicie o comando "npm run build"
 
-2 - Aguarde de 3 a 5 minutos
+2 - Dê o comando "npm run deploy"
+
+3 - Aguarde de 3 a 5 minutos
+
+4 - Confira no "Github Actions" do repositório do projeto se a implementação funcionou
