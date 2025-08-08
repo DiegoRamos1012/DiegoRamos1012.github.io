@@ -6,7 +6,8 @@ import ThemeToggle from "./components/ThemeToggle";
 import LanguageToggle from "./components/LanguageToggle";
 import ContactForm from "./components/ContactForm";
 import type { Theme, LanguageKey, Project, Translations } from "./types";
-import curriculum from "./assets/documents/Currículo Dev - Diego Ramos (2).pdf";
+import curriculumBR from "./assets/documents/Currículo Dev - Diego Ramos.pdf";
+import curriculum from "./assets/documents/Curriculum - Diego Ramos.pdf"
 import {
   FaHtml5,
   FaReact,
@@ -103,6 +104,7 @@ const translations = {
     footer:
       "© {year} Diego Ramos dos Santos - Github: Diego1012 - Email: diego.rms1012@gmail.com",
     downloadCV: "Baixar Currículo",
+    downloadInternationalCV: "Baixar Currículo em Inglês",
     contactInfo: "Informações de Contato",
     contactText:
       "Estou disponível para projetos freelance e oportunidades de trabalho. Entre em contato comigo pelo formulário ou diretamente pelos contatos abaixo.",
@@ -150,6 +152,7 @@ const translations = {
     footer:
       "© {year} Diego Ramos dos Santos - Github: Diego1012 - Email: diego.rms1012@gmail.com",
     downloadCV: "Download CV",
+    downloadInternationalCV: "Download International CV",
     contactInfo: "Contact Information",
     contactText:
       "I'm available for freelance projects and job opportunities. Contact me through the form or directly via email.",
@@ -254,30 +257,56 @@ function DownloadCV({ lang }: { lang: LanguageKey }) {
   const t = translations[lang];
 
   return (
-    <div className="download-cv-container">
-      <a
-        href={curriculum}
-        download="Diego_Ramos_CV.pdf"
-        className="download-cv-button"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          style={{ marginRight: "8px" }}
+    <>
+      <div className="download-cv-container">
+        <a
+          href={curriculumBR}
+          download="Diego_Ramos_CV.pdf"
+          className="download-cv-button"
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          <path
-            d="M8 12L3 7L4.4 5.55L7 8.15V1H9V8.15L11.6 5.55L13 7L8 12ZM2 14V11H4V13H12V11H14V14H2Z"
-            fill="currentColor"
-          />
-        </svg>
-        {t.downloadCV}
-      </a>
-    </div>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style={{ marginRight: "8px" }}
+          >
+            <path
+              d="M8 12L3 7L4.4 5.55L7 8.15V1H9V8.15L11.6 5.55L13 7L8 12ZM2 14V11H4V13H12V11H14V14H2Z"
+              fill="currentColor"
+            />
+          </svg>
+          {t.downloadCV}
+        </a>
+      </div>
+      <div className="download-cv-container">
+        <a
+          href={curriculum}
+          download="Diego_Ramos_CV (English).pdf"
+          className="download-cv-button"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style={{ marginRight: "8px" }}
+          >
+            <path
+              d="M8 12L3 7L4.4 5.55L7 8.15V1H9V8.15L11.6 5.55L13 7L8 12ZM2 14V11H4V13H12V11H14V14H2Z"
+              fill="currentColor"
+            />
+          </svg>
+          {t.downloadInternationalCV}
+        </a>
+      </div>
+    </>
   );
 }
 
