@@ -525,11 +525,17 @@ function Contact({
           <h3>{t.contactInfo}</h3>
           <p>{t.contactText}</p>
           <p className="contact-item">
-            <MdEmail className="contact-icon" />
+            <MdEmail
+              className="contact-icon"
+              style={{ marginRight: 10, position: "relative", top: 3 }}
+            />
             Email: diego.rms1012@gmail.com
           </p>
           <p className="contact-item">
-            <FaGithub className="contact-icon" />
+            <FaGithub
+              className="contact-icon"
+              style={{ marginRight: 10, position: "relative", top: 3 }}
+            />
             Github:{" "}
             <a
               href="https://github.com/DiegoRamos1012"
@@ -540,7 +546,10 @@ function Contact({
             </a>
           </p>
           <p className="contact-item">
-            <FaWhatsapp className="contact-icon" />
+            <FaWhatsapp
+              className="contact-icon"
+              style={{ marginRight: 10, position: "relative", top: 3 }}
+            />
             Whatsapp: (12) 97405-2268
           </p>
         </div>

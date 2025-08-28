@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { EmailService } from "../services/EmailService";
 import type { LanguageKey, Translations, ContactFormData } from "../types";
+import { IoIosSend } from "react-icons/io";
 
 interface ContactFormProps {
   lang: LanguageKey;
@@ -172,15 +173,25 @@ const ContactForm: React.FC<ContactFormProps> = ({ lang, translations }) => {
 
       <button
         type="submit"
-        className="submit-button"
+        className="submit-button flex items-center gap-3"
         disabled={isSubmitting}
         aria-busy={isSubmitting}
       >
-        {isSubmitting
-          ? lang === "pt"
-            ? "Enviando..."
-            : "Sending..."
-          : t.submitButton}
+        {isSubmitting ? (
+          lang === "pt" ? (
+            "Enviando..."
+          ) : (
+            "Sending..."
+          )
+        ) : (
+          <>
+            <IoIosSend
+              size={18}
+              style={{ marginRight: 10, position: "relative", top: 3 }}
+            />
+            {t.submitButton}
+          </>
+        )}
       </button>
     </form>
   );
