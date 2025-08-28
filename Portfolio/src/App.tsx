@@ -6,8 +6,8 @@ import ThemeToggle from "./components/ThemeToggle";
 import LanguageToggle from "./components/LanguageToggle";
 import ContactForm from "./components/ContactForm";
 import type { Theme, LanguageKey, Project, Translations } from "./types";
-import curriculumBR from "./assets/documents/Currículo Dev - Diego Ramos.pdf";
-import curriculum from "./assets/documents/Curriculum - Diego Ramos.pdf"
+import curriculumBR from "./assets/documents/Currículo - Diego Ramos.pdf";
+import curriculum from "./assets/documents/Curriculum - Diego Ramos.pdf";
 import {
   FaHtml5,
   FaReact,
@@ -15,7 +15,7 @@ import {
   FaGithub,
   FaWhatsapp,
   FaPhp,
-  FaLaravel
+  FaLaravel,
 } from "react-icons/fa";
 import { SiTypescript, SiVite } from "react-icons/si";
 import { FaGolang } from "react-icons/fa6";
@@ -27,22 +27,20 @@ const programLanguages = [
   { name: "TypeScript", icon: <SiTypescript /> },
   { name: "Golang", icon: <FaGolang /> },
   { name: "PHP", icon: <FaPhp /> },
-  { name: "JavaScript (Node.js)", icon: <FaNodeJs /> }
+  { name: "JavaScript (Node.js)", icon: <FaNodeJs /> },
 ];
 
 const frameworksAndLibraries = [
   { name: "React", icon: <FaReact /> },
   { name: "React Native", icon: <TbBrandReactNative /> },
   { name: "Laravel", icon: <FaLaravel /> },
-  { name: "Vite", icon: <SiVite /> }
+  { name: "Vite", icon: <SiVite /> },
 ];
-
 
 const toolsAndTechnologies = [
   { name: "HTML & CSS", icon: <FaHtml5 /> },
-  { name: "Git & GitHub", icon: <FaGithub /> }
+  { name: "Git & GitHub", icon: <FaGithub /> },
 ];
-
 
 const projects: Project[] = [
   {
@@ -75,9 +73,9 @@ const translations = {
     aboutText:
       "Sou um desenvolvedor apaixonado por tecnologia, com experiência em desenvolvimento web e interfaces modernas. Busco aprimorar meu conhecimento em Back-end e Mobile para criar softwares mais robustos e satisfazer as necessidades do cliente.",
     stacksTitle: "Linguagens de Programação",
-    skillsTitle: "Linguagens", 
+    skillsTitle: "Linguagens",
     technologiesTitle: "Frameworks e Bibliotecas",
-    toolsTitle: "Ferramentas e Outras Tecnologias", 
+    toolsTitle: "Ferramentas e Outras Tecnologias",
 
     projectsTitle: "Projetos",
     project1Title: "App Mobile para Barbearia",
@@ -122,7 +120,8 @@ const translations = {
       contact: "Contact",
     },
     aboutTitle: "About me",
-    aboutText: "I'm a passionate developer with experience in web development and modern interfaces. I'm looking to improve my knowledge in Backend and Mobile to create more robust software and meet client needs.",
+    aboutText:
+      "I'm a passionate developer with experience in web development and modern interfaces. I'm looking to improve my knowledge in Backend and Mobile to create more robust software and meet client needs.",
     stacksTitle: "Programming Languages",
     skillsTitle: "Programming Languages",
     technologiesTitle: "Frameworks and Libraries",
@@ -200,7 +199,7 @@ function Navbar({
         <a href="#about" className="navbar-link">
           {translations[lang].nav.about}
         </a>
-        <a href="#skills" className="navbar-link">
+        <a href="#stacks" className="navbar-link">
           {translations[lang].nav.stacks}
         </a>
         <a href="#projects" className="navbar-link">
@@ -414,17 +413,17 @@ function Projects({
   // Troca as descrições e títulos dos projetos conforme idioma
   const localizedProjects = projects.map((p, idx) => {
     if (idx === 0) {
-      return { 
-        ...p, 
+      return {
+        ...p,
         title: t.project1Title,
-        description: t.project1Desc 
+        description: t.project1Desc,
       };
     }
     if (idx === 1) {
-      return { 
-        ...p, 
+      return {
+        ...p,
         title: t.project2Title,
-        description: t.project2Desc 
+        description: t.project2Desc,
       };
     }
     return p;
@@ -440,7 +439,7 @@ function Projects({
             key={project.title}
             style={{
               animation: `fadeInUp 0.6s ease-out forwards ${index * 0.2}s`,
-              opacity: 0, 
+              opacity: 0,
             }}
           >
             <div className="project-image-wrapper">
@@ -453,7 +452,7 @@ function Projects({
                   width="100%"
                   height={
                     project.title.includes("Barbearia") ? "160px" : "160px"
-                  } 
+                  }
                   style={{
                     objectFit: "cover",
                     objectPosition: "center",
@@ -587,7 +586,10 @@ function App() {
         <HeroSection lang={lang} />
         <About lang={lang} />
         <Stacks stacks={programLanguages} lang={lang} />
-        <TechnologiesSection technologies={frameworksAndLibraries} lang={lang} />
+        <TechnologiesSection
+          technologies={frameworksAndLibraries}
+          lang={lang}
+        />
         <ToolsSection tools={toolsAndTechnologies} lang={lang} />
         <Projects projects={projects} lang={lang} />
         <Contact lang={lang} translations={translations} />
