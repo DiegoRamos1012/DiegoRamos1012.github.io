@@ -6,8 +6,8 @@ import ThemeToggle from "./components/ThemeToggle";
 import LanguageToggle from "./components/LanguageToggle";
 import ContactForm from "./components/ContactForm";
 import type { Theme, LanguageKey, Project, Translations } from "./types";
-import curriculumBR from "./assets/documents/Currículo - Diego Ramos.pdf";
-import curriculum from "./assets/documents/Curriculum - Diego Ramos.pdf";
+import curriculumBR from "./assets/docs/Currículo Dev Full Stack - Diego Ramos.pdf";
+import curriculum from "./assets/docs/Curriculum Dev Full Stack - Diego Ramos.pdf";
 import {
   FaHtml5,
   FaReact,
@@ -260,7 +260,7 @@ function DownloadCV({ lang }: { lang: LanguageKey }) {
       <div className="download-cv-container">
         <a
           href={curriculumBR}
-          download="Diego_Ramos_CV.pdf"
+          download="Currículo Dev Full Stack - Diego Ramos.pdf"
           className="download-cv-button"
           target="_blank"
           rel="noopener noreferrer"
@@ -284,7 +284,7 @@ function DownloadCV({ lang }: { lang: LanguageKey }) {
       <div className="download-cv-container">
         <a
           href={curriculum}
-          download="Diego_Ramos_CV (English).pdf"
+          download="Curriculum Dev Full Stack - Diego Ramos.pdf"
           className="download-cv-button"
           target="_blank"
           rel="noopener noreferrer"
